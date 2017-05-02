@@ -32,43 +32,40 @@ int main(void)
       if(75/w <= nx)
       {
          sort(tx, tx+nx);
-         
-         for(int i=0; i<nx-1; i++)
+
+         if(tx[0] > w/2 or 75-tx[nx-1] > w/2) possible_x = false;
+         else
          {
-            if(tx[i+1]-tx[i] > w)
+            for(int i=0; i<nx-1; i++)
             {
-               possible_x = false;
-               break;
+               if(tx[i+1]-tx[i] > w)
+               {
+                  possible_x = false;
+                  break;
+               }
             }
          }
       } else possible_x = false;
 
-      if(100/w <= ny and !possible_x)
+      if(100/w <= ny)
       {
          sort(ty, ty+ny);
          
-         for(int i=0; i<ny-1; i++)
+         if(ty[0] > w/2 or 100-ty[ny-1] > w/2) possible_y = false;
+         else
          {
-            if(ty[i+1]-ty[i] > w)
-            {
-               possible_y = false;
-               break;
-            }
+             for(int i=0; i<ny-1; i++)
+             {
+                if(ty[i+1]-ty[i] > w)
+                {
+                   possible_y = false;
+                   break;
+                }
+             }
          }
       } else possible_y = false;
 
-      //debug
-
-      printf("%d\n", nx);
-      printf("%d\n", ny);
-      printf("%lf\n", w);
-
-      for(int i=0; i<nx; i++) printf("%lf ", tx[i]);
-      printf("\n");
-      for(int i=0; i<ny; i++) printf("%lf ", ty[i]);
-      printf("\n");
-
-      if(possible_x or possible_y) printf("YES\n");
-      else                         printf("NO\n");
+      if(possible_x and possible_y) printf("YES\n");
+      else                          printf("NO\n");
    }
 }
