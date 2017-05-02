@@ -3,6 +3,7 @@
 #include <cstring>
 #include <iostream>
 #include <cstdint>
+#include <algorithm>
 
 using namespace std;
 
