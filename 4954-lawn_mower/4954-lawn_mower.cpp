@@ -7,11 +7,13 @@
 
 using namespace std;
 
+bool mower(double *t, int n, int max, double w);
+
 int main(void)
 {
    int nx, ny;
    double w;
-   bool possible_x, possible_y;
+   bool side_x, side_y;
 
    while(1)
    {
@@ -20,52 +22,32 @@ int main(void)
       scanf("%lf", &w);
       if(nx == 0 and ny == 0 and w == 0.0) return 0;
 
-      possible_x = true;
-      possible_y = true;
-
       double tx[nx];
       double ty[ny];
 
       for(int i=0; i<nx; i++) scanf("%lf", &tx[i]);
       for(int i=0; i<ny; i++) scanf("%lf", &ty[i]);
 
-      if(75/w <= nx)
-      {
-         sort(tx, tx+nx);
+      side_x = mower(tx, nx, 75,  w);
+      side_y = mower(ty, ny, 100, w);
 
-         if(tx[0] > w/2 or 75-tx[nx-1] > w/2) possible_x = false;
-         else
-         {
-            for(int i=0; i<nx-1; i++)
-            {
-               if(tx[i+1]-tx[i] > w)
-               {
-                  possible_x = false;
-                  break;
-               }
-            }
-         }
-      } else possible_x = false;
-
-      if(100/w <= ny)
-      {
-         sort(ty, ty+ny);
-         
-         if(ty[0] > w/2 or 100-ty[ny-1] > w/2) possible_y = false;
-         else
-         {
-             for(int i=0; i<ny-1; i++)
-             {
-                if(ty[i+1]-ty[i] > w)
-                {
-                   possible_y = false;
-                   break;
-                }
-             }
-         }
-      } else possible_y = false;
-
-      if(possible_x and possible_y) printf("YES\n");
-      else                          printf("NO\n");
+      if(side_x and side_y) printf("YES\n");
+      else                  printf("NO\n");
    }
+}
+
+bool mower(double *t, int n, int max, double w)
+{
+   if(max/w <= n)
+   {
+      sort(t, t+n);
+
+      if(t[0] > w/2 or max-t[n-1] > w/2) return false;
+      
+      for(int i=0; i<n-1; i++)
+      {
+         if(t[i+1]-t[i] > w) return false;
+      }
+   } else return false;
+   return true;
 }
