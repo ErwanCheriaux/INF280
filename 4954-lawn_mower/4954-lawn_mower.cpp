@@ -59,16 +59,16 @@ int main(void)
 
       double tx[nx];
       double ty[ny];
-      for(int i=0; i<nx-1; i++) scanf("%lf", &tx[i]);
-      for(int i=0; i<ny-1; i++) scanf("%lf", &ty[i]);
+      for(int i=0; i<nx; i++) scanf("%lf", &tx[i]);
+      for(int i=0; i<ny; i++) scanf("%lf", &ty[i]);
 
       printf("%d\n", nx);
       printf("%d\n", ny);
       printf("%lf\n", w);
 
-      for(int i=0; i<nx+1; i++) printf("%lf ", tx[i]);
+      for(int i=0; i<nx; i++) printf("%lf ", tx[i]);
       printf("\n");
-      for(int i=0; i<ny+1; i++) printf("%lf ", ty[i]);
+      for(int i=0; i<ny; i++) printf("%lf ", ty[i]);
       printf("\n");
 
 //    if(possible_x or possible_y) printf("YES\n");
