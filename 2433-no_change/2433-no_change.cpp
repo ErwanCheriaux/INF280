@@ -35,8 +35,12 @@ void no_change(int x, int *v, int k)
    {
       if(index > 0 and c[index-1] <= c[index]) 
       {   
-         printf("NO\n\n");
-         return;
+         if(index == k-1)
+         {
+            printf("NO\n\n");
+            return;
+         }
+         index++;
       }
       else c[index]++;
 
