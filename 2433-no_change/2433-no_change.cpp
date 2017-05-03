@@ -14,7 +14,7 @@ int main(void)
 {
    int x, v[5], k;
 
-   while(scanf("%d\n\n", &x)==1)
+   while(scanf("%d", &x)==1)
    {
       //lecture input
       scanf("%d %d", &x, &k);
@@ -33,7 +33,13 @@ void no_change(int x, int *v, int k)
 
    while(1)
    {
-      c[index]++;
+      if(index > 0 and c[index-1] <= c[index]) 
+      {   
+         printf("NO\n\n");
+         return;
+      }
+      else c[index]++;
+
       y = argent(v, c, k);
       if(x == y)
       {
