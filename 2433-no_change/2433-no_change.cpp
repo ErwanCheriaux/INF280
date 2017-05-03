@@ -12,9 +12,10 @@ int  argent(int *v, int *c, int k);
 
 int main(void)
 {
-   int x, v[5], k;
+   int n, x, v[5], k;
 
-   while(scanf("%d", &x)==1)
+   scanf("%d", &n);
+   for(int t=0; t<n; t++)
    {
       //lecture input
       scanf("%d %d", &x, &k);
