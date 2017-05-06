@@ -21,10 +21,10 @@ int main(void)
       scanf("%d %d", &x, &k);
       for(int i=0; i<k; i++) scanf("%d", &v[i]);
 
-      if(no_change(x, v, k)) printf("YES");
-      else                   printf("NO");
+      if(no_change(x, v, k)) printf("YES\n");
+      else                   printf("NO\n");
 
-      if(t != n-1) printf("\n\n");
+      if(t != n-1) printf("\n");
    }
    return 0;
 }
@@ -49,6 +49,10 @@ bool no_change(int x, int *v, int k)
                for(int i4=0; i4<=i3; i4++)
                {
                   c[4]=i4;
+                  //debug
+                  printf("c : {%d,%d,%d,%d,%d} => ", i0,i1,i2,i3,i4);
+                  printf("%d\n", argent(v, c, k));
+                  ///////
                   if(x == argent(v, c, k)) return true;
                }
             }
