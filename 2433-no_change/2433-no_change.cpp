@@ -49,10 +49,6 @@ bool no_change(int x, int *v, int k)
                for(int i4=0; i4<=i3; i4++)
                {
                   c[4]=i4;
-                  //debug
-                  printf("c : {%d,%d,%d,%d,%d} => ", i0,i1,i2,i3,i4);
-                  printf("%d\n", argent(v, c, k));
-                  ///////
                   if(x == argent(v, c, k)) return true;
                }
             }
