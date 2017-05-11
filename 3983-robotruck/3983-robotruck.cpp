@@ -26,14 +26,20 @@ class Package
       int _min = INT_MAX;
 };
 
-int robotruck(int numPackage, vector<Package> packages)
+int robotruck(int numPackage)
 {
+   
+
    return 0;
 }
 
+//variables globales
+int P, N;
+vector<Package> packages;
+
 int main(void)
 {
-   int n, P, N;
+   int n;
 
    scanf("%d", &n);
 
@@ -42,8 +48,8 @@ int main(void)
       scanf("%d", &P);
       scanf("%d", &N);
     
-      vector<Package> packages;
-  
+      packages.clear();
+
       //input
       for(int i=0; i<N; i++) 
       {
@@ -56,10 +62,9 @@ int main(void)
       for(auto pack : packages) pack.display();
 
       //output
-      printf("%d", robotruck(0, packages));
+      printf("%d", robotruck(0));
       if(t == n-1) printf("\n");
       else         printf("\n\n");
    }
-
    return 0;
 }
