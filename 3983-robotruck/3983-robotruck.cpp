@@ -4,27 +4,43 @@
 #include <iostream>
 #include <cstdint>
 #include <algorithm>
+#include <vector>
+#include <climits>
 
 using namespace std;
 
+class Package
+{
+   public:
+      Package(int x, int y, int p) : _x(x), _y(y), _p(p) {}
+      virtual void display() {printf("%d, %d, %d, %d\n", _x, _y, _p, _min);}
+
+   private:
+      int _x, _y, _p;
+      int _min = INT_MAX;
+};
+
 int main(void)
 {
-   int n, C, N;
+   int n, P, N;
 
    scanf("%d", &n);
 
    for(int t=0; t<n; t++)
    {
-      scanf("%d", &C);
+      scanf("%d", &P);
       scanf("%d", &N);
     
-      int x[N], y[N], c[N];
+      int x, y, p;
+      vector<Package> packages;
   
-      for(int i=0; i<N; i++) scanf("%d %d %d", &x[i], &y[i], &c[i]);
+      for(int i=0; i<N; i++) 
+      {
+         scanf("%d %d %d", &x, &y, &p);
+         packages.push_back(Package(x,y,p));
+      }
 
-      //debug
-      printf("%d\n\n%d\n%d\n", n, C, N);
-      for(int i=0; i<N; i++) printf("%d %d %d\n", x[i], y[i], c[i]);
+      for(auto pack : packages) pack.display();
    }
 
    return 0;
