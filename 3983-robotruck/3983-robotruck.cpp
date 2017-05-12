@@ -63,9 +63,6 @@ int main(void)
          packages.push_back(Package(x,y,p));
       }
 
-      //debug
-      for(auto pack : packages) pack.display();
-
       //output
       printf("%d", robotruck(0));
       if(t == n-1) printf("\n");
@@ -83,8 +80,8 @@ int robotruck(int numPackage)
    int dist = 0;
    int x=0, y=0;
 
-   //tant que le poid n'est pas dépassé et qu'il reste des paquets
-   while(poid + packages[numPackage].getP() <= P and numPackage<N)
+   //tant qu'il reste des paquets et que le poid n'est pas dépassé 
+   while(numPackage<N and poid + packages[numPackage].getP() <= P)
    {
       //mise à jour des caratéristiques
       poid = poid + packages[numPackage].getP();
@@ -98,10 +95,6 @@ int robotruck(int numPackage)
       if(numPackage+1<N) distanceTour += packages[numPackage].next(numPackage+1);
       if(distanceMin > distanceTour) distanceMin = distanceTour;
       numPackage++;
-
-      //debug
-      printf("\nnumPackage = %d\n", numPackage);
-      for(auto pack : packages) pack.display();
    }
    return distanceMin;
 }
