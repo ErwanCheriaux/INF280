@@ -35,14 +35,19 @@ class Box
    public:
       Box() {}
 
-      virtual void display() {printf("Box volume free = %d\n", volumeFree); for(auto b : balloons) b.display();}
+      virtual void display() {printf("Box volume free = %lf\n", volumeFree); for(auto b : balloons) b.display();}
+
+      virtual int getVolumeFree() {return round(volumeFree);}
 
       virtual void setFirstConner(int x, int y, int z) {first_x= x; first_y= y; first_z= z;}
       virtual void setOppoConner (int x, int y, int z) {oppo_x = x; oppo_y = y; oppo_z = z;}
 
       virtual void addBalloon(Balloon b) {balloons.push_back(b);}
-      virtual void calculeVolumeFree() 
+      virtual void calculeVolumeFree()
       {
+         //initialisation du volume libre
+         volumeFree = (oppo_x-first_x) * (oppo_y-first_y) * (oppo_z-first_z);
+
          while(1)
          {
             Balloon *balloon;
@@ -79,6 +84,7 @@ class Box
             //s'il n'y a plus de ballon à gérer
             if(!contrainteBalloonMin) return;
             balloon->setR(contrainteBalloonMin);
+            volumeFree = volumeFree - balloon->getV();
 
             //debug
             printf("Ballon avec la plus petite contrainte\n");
@@ -90,7 +96,7 @@ class Box
       vector<Balloon> balloons;
       int first_x, first_y, first_z;
       int oppo_x,  oppo_y,  oppo_z;
-      int _v, volumeFree=0;
+      double volumeFree=0;
 };
 
 int main(void)
