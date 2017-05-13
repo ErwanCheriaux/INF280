@@ -14,17 +14,20 @@ class Balloon
    public:
       Balloon(int x, int y, int z): _x(x), _y(y), _z(z) {}
 
-      virtual void display() {printf("{%d, %d, %d} r=%d v=%d\n", _x, _y, _z, _r, _v);}
+      virtual void display() {printf("{%d, %d, %d} r=%d v=%lf\n", _x, _y, _z, _r, getV());}
 
       virtual int getX() {return _x;}
       virtual int getY() {return _y;}
       virtual int getZ() {return _z;}
 
+      virtual double getV() {return 4.18879*_r*_r*_r;} // (4*pi)/3 = 4.18879
+
+      virtual void setR(int r) {_r = r;}
+
       virtual bool notUsed() {return (_r) ? false : true;}
 
    private:
-      int _x, _y, _z;
-      int _r=0, _v=0;
+      int _x, _y, _z, _r=0;
 };
 
 class Box
@@ -42,6 +45,7 @@ class Box
       {
          Balloon *balloon;
          int contrainteBalloonMin = 0;
+         int index = 0;
 
          //recherche du ballon avec la plus faible contrainte
          for(auto b : balloons)
@@ -64,10 +68,13 @@ class Box
                if(contrainteBalloonMin < contrainteBalloonMax)
                {
                   contrainteBalloonMin = contrainteBalloonMax;
-                  balloon = &b;
+                  balloon = &balloons.at(index);
                }
             }
+            index++;
          }
+
+         balloon->setR(contrainteBalloonMin);
 
          //debug
          printf("Ballon avec la plus petite contrainte\n");
