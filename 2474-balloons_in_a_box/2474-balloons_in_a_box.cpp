@@ -43,42 +43,47 @@ class Box
       virtual void addBalloon(Balloon b) {balloons.push_back(b);}
       virtual void calculeVolumeFree() 
       {
-         Balloon *balloon;
-         int contrainteBalloonMin = 0;
-         int index = 0;
-
-         //recherche du ballon avec la plus faible contrainte
-         for(auto b : balloons)
+         while(1)
          {
-            int contrainteBalloonMax = INT_MAX;
-            if(b.notUsed())
+            Balloon *balloon;
+            int contrainteBalloonMin = 0;
+            int index = 0;
+
+            //recherche du ballon avec la plus faible contrainte
+            for(auto b : balloons)
             {
-               //contrainte de la boite
-               if(b.getX() - first_x < contrainteBalloonMax) contrainteBalloonMax = b.getX() - first_x;
-               if(b.getY() - first_y < contrainteBalloonMax) contrainteBalloonMax = b.getY() - first_y;
-               if(b.getZ() - first_z < contrainteBalloonMax) contrainteBalloonMax = b.getZ() - first_z;
-
-               if(oppo_x - b.getX() < contrainteBalloonMax) contrainteBalloonMax = oppo_x - b.getX();
-               if(oppo_y - b.getY() < contrainteBalloonMax) contrainteBalloonMax = oppo_y - b.getY();
-               if(oppo_z - b.getZ() < contrainteBalloonMax) contrainteBalloonMax = oppo_z - b.getZ();
-
-               //contrainte des autres ballons
-             
-               //ballons ayant la plus faible contrainte
-               if(contrainteBalloonMin < contrainteBalloonMax)
+               int contrainteBalloonMax = INT_MAX;
+               if(b.notUsed())
                {
-                  contrainteBalloonMin = contrainteBalloonMax;
-                  balloon = &balloons.at(index);
+                  //contrainte de la boite
+                  if(b.getX() - first_x < contrainteBalloonMax) contrainteBalloonMax = b.getX() - first_x;
+                  if(b.getY() - first_y < contrainteBalloonMax) contrainteBalloonMax = b.getY() - first_y;
+                  if(b.getZ() - first_z < contrainteBalloonMax) contrainteBalloonMax = b.getZ() - first_z;
+
+                  if(oppo_x - b.getX() < contrainteBalloonMax) contrainteBalloonMax = oppo_x - b.getX();
+                  if(oppo_y - b.getY() < contrainteBalloonMax) contrainteBalloonMax = oppo_y - b.getY();
+                  if(oppo_z - b.getZ() < contrainteBalloonMax) contrainteBalloonMax = oppo_z - b.getZ();
+
+                  //contrainte des autres ballons
+
+                  //ballons ayant la plus faible contrainte
+                  if(contrainteBalloonMin < contrainteBalloonMax)
+                  {
+                     contrainteBalloonMin = contrainteBalloonMax;
+                     balloon = &balloons.at(index);
+                  }
                }
+               index++;
             }
-            index++;
+
+            //s'il n'y a plus de ballon à gérer
+            if(!contrainteBalloonMin) return;
+            balloon->setR(contrainteBalloonMin);
+
+            //debug
+            printf("Ballon avec la plus petite contrainte\n");
+            balloon->display();
          }
-
-         balloon->setR(contrainteBalloonMin);
-
-         //debug
-         printf("Ballon avec la plus petite contrainte\n");
-         balloon->display();
       }
 
    private:
