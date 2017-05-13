@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <vector>
 #include <climits>
+#include <math.h>
 
 using namespace std;
 
