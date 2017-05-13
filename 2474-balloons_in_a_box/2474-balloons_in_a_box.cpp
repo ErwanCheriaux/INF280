@@ -14,20 +14,22 @@ class Balloon
    public:
       Balloon(int x, int y, int z): _x(x), _y(y), _z(z) {}
 
-      virtual void display() {printf("{%d, %d, %d} r=%d v=%lf\n", _x, _y, _z, _r, getV());}
+      virtual void display() {printf("{%d, %d, %d} r=%lf v=%lf\n", _x, _y, _z, _r, getV());}
 
       virtual int getX() {return _x;}
       virtual int getY() {return _y;}
       virtual int getZ() {return _z;}
 
+      virtual double getR() {return _r;}
       virtual double getV() {return 4.18879*_r*_r*_r;} // (4*pi)/3 = 4.18879
 
-      virtual void setR(int r) {_r = r;}
+      virtual void setR(double r) {_r = r;}
 
       virtual bool notUsed() {return (_r) ? false : true;}
 
    private:
-      int _x, _y, _z, _r=0;
+      int _x, _y, _z;
+      double _r=0;
 };
 
 class Box
@@ -37,12 +39,19 @@ class Box
 
       virtual void display() {printf("Box volume free = %lf\n", volumeFree); for(auto b : balloons) b.display();}
 
-      virtual int getVolumeFree() {return round(volumeFree);}
+      virtual int getVolumeFree() {calculeVolumeFree(); return round(volumeFree);}
 
       virtual void setFirstConner(int x, int y, int z) {first_x= x; first_y= y; first_z= z;}
       virtual void setOppoConner (int x, int y, int z) {oppo_x = x; oppo_y = y; oppo_z = z;}
 
       virtual void addBalloon(Balloon b) {balloons.push_back(b);}
+
+   private:
+      vector<Balloon> balloons;
+      int first_x, first_y, first_z;
+      int oppo_x,  oppo_y,  oppo_z;
+      double volumeFree=0;
+
       virtual void calculeVolumeFree()
       {
          //initialisation du volume libre
@@ -51,13 +60,13 @@ class Box
          while(1)
          {
             Balloon *balloon;
-            int contrainteBalloonMin = 0;
+            double contrainteBalloonMin = 0;
             int index = 0;
 
             //recherche du ballon avec la plus faible contrainte
             for(auto b : balloons)
             {
-               int contrainteBalloonMax = INT_MAX;
+               double contrainteBalloonMax = INT_MAX;
                if(b.notUsed())
                {
                   //contrainte de la boite
@@ -70,6 +79,18 @@ class Box
                   if(oppo_z - b.getZ() < contrainteBalloonMax) contrainteBalloonMax = oppo_z - b.getZ();
 
                   //contrainte des autres ballons
+                  for(auto other : balloons) 
+                  {
+                     if(!other.notUsed())
+                     {
+                        double dist = sqrt((b.getX() - other.getX())*(b.getX() - other.getX()) + \
+                                           (b.getY() - other.getY())*(b.getY() - other.getY()) + \
+                                           (b.getZ() - other.getZ())*(b.getZ() - other.getZ()));
+
+                        dist = dist - other.getR();
+                        if(dist > 0 and dist < contrainteBalloonMax) contrainteBalloonMax = dist;
+                     }
+                  }
 
                   //ballons ayant la plus faible contrainte
                   if(contrainteBalloonMin < contrainteBalloonMax)
@@ -85,18 +106,8 @@ class Box
             if(!contrainteBalloonMin) return;
             balloon->setR(contrainteBalloonMin);
             volumeFree = volumeFree - balloon->getV();
-
-            //debug
-            printf("Ballon avec la plus petite contrainte\n");
-            balloon->display();
          }
       }
-
-   private:
-      vector<Balloon> balloons;
-      int first_x, first_y, first_z;
-      int oppo_x,  oppo_y,  oppo_z;
-      double volumeFree=0;
 };
 
 int main(void)
@@ -110,6 +121,7 @@ int main(void)
 
       scanf("%d", &n);
       if(!n) return 0;
+      if (nbTest != 1) printf("\n");
       
       //first corner
       scanf("%d %d %d", &x, &y, &z);
@@ -126,9 +138,7 @@ int main(void)
          box.addBalloon(Balloon(x, y, z));
       }
 
-      box.calculeVolumeFree();
-
-      box.display();
+      printf("Box %d: %d\n", nbTest, box.getVolumeFree());
 
       nbTest++;
    }
