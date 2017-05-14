@@ -22,7 +22,7 @@ class Balloon
       virtual int getZ() {return _z;}
 
       virtual double getR() {return _r;}
-      virtual double getV() {return 4.18879*_r*_r*_r;} // (4*pi)/3 = 4.18879
+      virtual double getV() {return 4.188790205*_r*_r*_r;} // (4*pi)/3 = 4.188790205
 
       virtual void setR(double r) {_r = r;}
 
@@ -122,7 +122,6 @@ int main(void)
 
       scanf("%d", &n);
       if(!n) return 0;
-      if (nbTest != 1) printf("\n");
       
       //first corner
       scanf("%d %d %d", &x, &y, &z);
@@ -139,7 +138,7 @@ int main(void)
          box.addBalloon(Balloon(x, y, z));
       }
 
-      printf("Box %d: %d\n", nbTest, box.getVolumeFree());
+      printf("Box %d: %d\n\n", nbTest, box.getVolumeFree());
 
       nbTest++;
    }
