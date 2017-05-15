@@ -45,7 +45,14 @@ class Box
       virtual void setFirstConner(int x, int y, int z) {first_x= x; first_y= y; first_z= z;}
       virtual void setOppoConner (int x, int y, int z) {oppo_x = x; oppo_y = y; oppo_z = z;}
 
-      virtual void addBalloon(Balloon b) {balloons.push_back(b);}
+      virtual void addBalloon(Balloon b)
+      {
+         if(b.getX() > first_x and b.getY() > first_y and b.getZ() > first_z and \
+            b.getX() < oppo_x  and b.getY() < oppo_y  and b.getZ() < oppo_z)
+         {
+            balloons.push_back(b);
+         }
+      }
 
    private:
       vector<Balloon> balloons;
