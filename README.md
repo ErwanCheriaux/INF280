@@ -10,11 +10,11 @@ Ce que j'utilise:
 
 ## Problèmes du contrôle continue
 
-[X] 7211 Identifying tea
-[X] 4954 Lawn mower
-[X] 4493 That is Your Queue
-[X] 2433 No Change
+- [X] 7211 Identifying tea
+- [X] 4954 Lawn mower
+- [X] 4493 That is Your Queue
+- [X] 2433 No Change
 
-[X] 3983 Robotruck
-[ ] 2474 Balloons in a Box
-[ ] Copying Books
+- [X] 3983 Robotruck
+- [ ] 2474 Balloons in a Box
+- [ ] Copying Books
