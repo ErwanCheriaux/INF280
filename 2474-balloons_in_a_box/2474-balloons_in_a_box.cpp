@@ -7,6 +7,7 @@
 #include <vector>
 #include <climits>
 #include <math.h>
+//#include <utility>
 
 using namespace std;
 
@@ -40,10 +41,15 @@ class Box
 
       virtual void display() {printf("Box volume free = %lf\n", volumeFree); for(auto b : balloons) b.display();}
 
-      virtual int getVolumeFree() {calculeVolumeFree(); return round(volumeFree);}
+      virtual long getVolumeFree() {calculeVolumeFree(); return round(volumeFree);}
 
       virtual void setFirstConner(int x, int y, int z) {first_x= x; first_y= y; first_z= z;}
-      virtual void setOppoConner (int x, int y, int z) {oppo_x = x; oppo_y = y; oppo_z = z;}
+      virtual void setOppoConner (int x, int y, int z) 
+      {
+         oppo_x = x; if(oppo_x < first_x) swap(oppo_x, first_x);
+         oppo_y = y; if(oppo_y < first_y) swap(oppo_y, first_y);
+         oppo_z = z; if(oppo_z < first_z) swap(oppo_z, first_z);
+      }
 
       virtual void addBalloon(Balloon b)
       {
@@ -63,7 +69,9 @@ class Box
       virtual void calculeVolumeFree()
       {
          //initialisation du volume libre
-         volumeFree = (oppo_x-first_x) * (oppo_y-first_y) * (oppo_z-first_z);
+         volumeFree  = (oppo_x-first_x);
+         volumeFree *= (oppo_y-first_y);
+         volumeFree *= (oppo_z-first_z);
 
          while(1)
          {
@@ -96,7 +104,8 @@ class Box
                                            (b.getZ() - other.getZ())*(b.getZ() - other.getZ()));
 
                         dist = dist - other.getR();
-                        if(dist > 0 and dist < contrainteBalloonMax) contrainteBalloonMax = dist;
+                        if(dist <= 0)                        contrainteBalloonMax = 0;
+                        else if(dist < contrainteBalloonMax) contrainteBalloonMax = dist;
                      }
                   }
 
@@ -145,7 +154,7 @@ int main(void)
          box.addBalloon(Balloon(x, y, z));
       }
 
-      printf("Box %d: %d\n\n", nbTest, box.getVolumeFree());
+      printf("Box %d: %ld\n\n", nbTest, box.getVolumeFree());
 
       nbTest++;
    }
