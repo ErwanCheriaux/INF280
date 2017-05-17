@@ -7,7 +7,7 @@
 #include <vector>
 #include <climits>
 #include <math.h>
-//#include <utility>
+#include <utility>
 
 using namespace std;
 
@@ -15,8 +15,6 @@ class Balloon
 {
    public:
       Balloon(int x, int y, int z): _x(x), _y(y), _z(z) {}
-
-      virtual void display() {printf("{%d, %d, %d} r=%lf v=%lf\n", _x, _y, _z, _r, getV());}
 
       virtual int getX() {return _x;}
       virtual int getY() {return _y;}
@@ -38,8 +36,6 @@ class Box
 {
    public:
       Box() {}
-
-      virtual void display() {printf("Box volume free = %lf\n", volumeFree); for(auto b : balloons) b.display();}
 
       virtual long getVolumeFree() {calculeVolumeFree(); return round(volumeFree);}
 
@@ -138,6 +134,7 @@ int main(void)
 
       scanf("%d", &n);
       if(!n) return 0;
+      if(nbTest > 1) printf("\n");
       
       //first corner
       scanf("%d %d %d", &x, &y, &z);
@@ -154,7 +151,7 @@ int main(void)
          box.addBalloon(Balloon(x, y, z));
       }
 
-      printf("Box %d: %ld\n\n", nbTest, box.getVolumeFree());
+      printf("Box %d: %ld\n", nbTest, box.getVolumeFree());
 
       nbTest++;
    }
