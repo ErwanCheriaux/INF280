@@ -8,6 +8,9 @@ Ce que j'utilise:
 * g++ -std=c++11 file.cpp && ./a.out < input.txt
 * g++ -g -std=c++11 file.cpp && gdb ./a.out
 
+Pour uDebug:
+* python3.4 ./genInput.balloon.py && g++ -std=c++11 2474-balloons_in_a_box.cpp && ./a.out < balloons.input > out.txt && gedit balloons.input balloon.output
+
 ## Problèmes du contrôle continue
 
 - [X] 7211 Identifying tea
@@ -17,4 +20,4 @@ Ce que j'utilise:
 
 - [X] 3983 Robotruck
 - [ ] 2474 Balloons in a Box
-- [ ] Copying Books
+- [ ] 5540 Copying Books
