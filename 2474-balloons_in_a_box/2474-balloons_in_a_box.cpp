@@ -31,9 +31,9 @@ class Box
 
       virtual double getVolume()
       {
-         int volume  = (oppo_x-first_x);
-             volume *= (oppo_y-first_y);
-             volume *= (oppo_z-first_z);
+         double volume  = (oppo_x-first_x);
+                volume *= (oppo_y-first_y);
+                volume *= (oppo_z-first_z);
          return volume;
       }
 
@@ -69,7 +69,7 @@ int main(void)
    while(1)
    {
       int n, x, y, z;
-      Box *box;
+      Box box;
 
       scanf("%d", &n);
       if(!n) return 0;
@@ -77,22 +77,24 @@ int main(void)
       
       //first corner
       scanf("%d %d %d", &x, &y, &z);
-      box->setFirstConner(x, y, z);
+      box.setFirstConner(x, y, z);
 
       //opposite corner
       scanf("%d %d %d", &x, &y, &z);
-      box->setOppoConner(x, y, z);
+      box.setOppoConner(x, y, z);
 
       //balloons
       for(int i=0; i<n; i++)
       {
          scanf("%d %d %d", &x, &y, &z);
-         box->addBalloon(Balloon(x, y, z));
+         box.addBalloon(Balloon(x, y, z));
       }
 
       volumeBallons = 0;
-      calculeVolumeBalloon(box, 0.0);
-      printf("Box %d: %lf\n", nbTest, box->getVolume() - volumeBallons);
+      calculeVolumeBalloon(&box, 0.0);
+
+      double volumeFree = round(box.getVolume() - volumeBallons);
+      printf("Box %d: %.0lf\n", nbTest, volumeFree);
 
       nbTest++;
    }
@@ -103,7 +105,7 @@ void calculeVolumeBalloon(Box *box, double volumeCourant)
    //maximisation du volume occupé par les ballons
    volumeBallons = max(volumeBallons, volumeCourant);
 
-   for(auto balloon : box->balloons)
+   for(auto &balloon : box->balloons)
    {
       if(balloon.notUsed())
       {
@@ -133,13 +135,13 @@ void calculeVolumeBalloon(Box *box, double volumeCourant)
             }
          }
 
-         //s'il n'y a plus de ballon à gérer
+         //si le ballon à gérer à un rayon non négligable
          if(contrainte)
          {
             balloon.r = contrainte;
             calculeVolumeBalloon(box, volumeCourant + balloon.getVolume());
             balloon.r = 0;
          }
-      } 
+      }
    }
 }

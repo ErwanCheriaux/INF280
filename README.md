@@ -9,7 +9,7 @@ Ce que j'utilise:
 * g++ -g -std=c++11 file.cpp && gdb ./a.out
 
 Pour uDebug:
-* python3.4 ./genInput.balloon.py && g++ -std=c++11 2474-balloons_in_a_box.cpp && ./a.out < balloons.input > out.txt && gedit balloons.input balloon.output
+* python3.4 ./genInput.balloon.py && g++ -std=c++11 2474-balloons_in_a_box.cpp && ./a.out < balloons.input > balloons.output && gedit balloons.input balloons.output
 
 ## Problèmes du contrôle continue
 
