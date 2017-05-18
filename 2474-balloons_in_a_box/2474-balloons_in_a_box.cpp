@@ -73,7 +73,6 @@ int main(void)
 
       scanf("%d", &n);
       if(!n) return 0;
-      if(nbTest > 1) printf("\n");
       
       //first corner
       scanf("%d %d %d", &x, &y, &z);
@@ -94,7 +93,7 @@ int main(void)
       calculeVolumeBalloon(&box, 0.0);
 
       double volumeFree = round(box.getVolume() - volumeBallons);
-      printf("Box %d: %.0lf\n", nbTest, volumeFree);
+      printf("Box %d: %.0lf\n\n", nbTest, volumeFree);
 
       nbTest++;
    }

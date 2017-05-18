@@ -19,5 +19,5 @@ Pour uDebug:
 - [X] 2433 No Change
 
 - [X] 3983 Robotruck
-- [ ] 2474 Balloons in a Box
+- [X] 2474 Balloons in a Box
 - [ ] 5540 Copying Books
