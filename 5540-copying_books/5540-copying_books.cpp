@@ -32,9 +32,18 @@ int main(void)
       copying_books(k-1);
 
       //output
-      printf("%d\n", contrainte);
-      for(int i=0; i<k-1; i++) printf("%d, ", best[i]);
-      printf("\n\n");
+      int scriber = 0;
+      for(int i=0; i<m; i++)
+      {
+         if(i==best[scriber])
+         {
+            printf("/ ");
+            scriber++;
+         }
+         if(i==m-1) printf("%d", p[i]);
+         else       printf("%d ", p[i]);
+      }
+      printf("\n");
    }
    return 0;
 }
