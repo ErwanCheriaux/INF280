@@ -22,19 +22,18 @@ int main(void)
    {
       //lecture input
       scanf("%d %d", &m, &k);
+      for(int i=0; i<m; i++) scanf("%d", &p[i]);
 
-      for(int i=0; i<m; i++)
-      {
-         scanf("%d", &p[i]);
-         slash[i] = i;
-      }
-
+      //initialisation
+      for(int i=0; i<k-1; i++) slash[i] = i+1;
       contrainte = INT_MAX;
-      copying_books(k);
+
+      //algo
+      copying_books(k-1);
 
       //output
       printf("%d\n", contrainte);
-      for(int i=0; i<k; i++) printf("%d, ", best[i]);
+      for(int i=0; i<k-1; i++) printf("%d, ", best[i]);
       printf("\n\n");
    }
    return 0;
@@ -48,24 +47,24 @@ void copying_books(int scriber)
       if(contrainte > contrainteCourante)
       {
          contrainte = contrainteCourante;
-         for(int i=0; i<k; i++) best[i] = slash[i];
+         for(int i=0; i<k-1; i++) best[i] = slash[i];
       }
       return;
    }
 
-   int fin = m;
-   if(scriber != k) fin = slash[scriber+1];
+   int next = m-1;
+   if(scriber != k-1) next = slash[scriber];
 
-   for(int i=slash[scriber]; i<fin; i++)
+   for(int i=slash[scriber-1]; i<next; i++)
    {
-      slash[scriber] = i;
+      slash[scriber-1] = i;
       copying_books(scriber-1);
    }
 }
 
 int calculeContrainte()
 {
-   int som=0, top=0, scriber=1;
+   int som=0, top=0, scriber=0;
    for(int i=0; i<m; i++)
    {
       if(i==slash[scriber])
@@ -76,5 +75,6 @@ int calculeContrainte()
       }
       som += p[i];
    }
+   top = max(top, som);
    return top;
 }
