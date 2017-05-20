@@ -61,7 +61,7 @@ void copying_books(int scriber)
       return;
    }
 
-   int next = m-1;
+   int next = m;
    if(scriber != k-1) next = slash[scriber];
 
    for(int i=slash[scriber-1]; i<next; i++)
@@ -69,6 +69,7 @@ void copying_books(int scriber)
       slash[scriber-1] = i;
       copying_books(scriber-1);
    }
+   slash[scriber-1] = scriber;
 }
 
 int calculeContrainte()
