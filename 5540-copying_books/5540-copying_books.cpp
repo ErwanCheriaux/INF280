@@ -8,7 +8,8 @@
 
 using namespace std;
 
-int m, k, p[500], slash[500], best[500], contrainte;
+int m, k, p[500], slash[500], best[500];
+long long contrainte;
 
 void copying_books();
 int calculeContrainte();
@@ -40,7 +41,7 @@ int main(void)
 
       //initialisation
       for(int i=0; i<k-1; i++) slash[i] = i+1;
-      contrainte = INT_MAX;
+      contrainte = LLONG_MAX;
 
       //algo
       copying_books();
@@ -74,7 +75,8 @@ void copying_books()
 
 int calculeContrainte()
 {
-   int som=0, topSom=0, scriber=0, topScriber=0;
+   long long som=0, topSom=0;
+   int scriber=0, topScriber=0;
 
    for(int i=0; i<m; i++)
    {
