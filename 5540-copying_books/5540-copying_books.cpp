@@ -21,7 +21,16 @@ int main(void)
    for(int t=0; t<N; t++)
    {
       //lecture input
-      scanf("%d %d", &m, &k);
+      scanf("%d %d\n", &m, &k);
+      
+      if(k==1)
+      {
+         string str;
+         getline (cin, str);
+         cout << str << endl;
+         continue;
+      }
+
       for(int i=0; i<m; i++)
       {
          scanf("%d", &p[i]);
