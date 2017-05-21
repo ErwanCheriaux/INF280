@@ -10,7 +10,7 @@ using namespace std;
 
 int m, k, p[500], slash[500], best[500], contrainte;
 
-void copying_books(int scriber);
+void copying_books();
 int calculeContrainte();
 
 int main(void)
@@ -22,14 +22,19 @@ int main(void)
    {
       //lecture input
       scanf("%d %d", &m, &k);
-      for(int i=0; i<m; i++) scanf("%d", &p[i]);
+      for(int i=0; i<m; i++)
+      {
+         scanf("%d", &p[i]);
+         slash[i] = 0;
+         best[i]  = 0;
+      }
 
       //initialisation
       for(int i=0; i<k-1; i++) slash[i] = i+1;
       contrainte = INT_MAX;
 
       //algo
-      copying_books(k-1);
+      copying_books();
 
       //output
       int scriber = 0;
@@ -48,43 +53,45 @@ int main(void)
    return 0;
 }
 
-void copying_books(int scriber)
+void copying_books()
 {
-   if(scriber == 0)
+   while(1)
    {
-      int contrainteCourante = calculeContrainte();
-      if(contrainte > contrainteCourante)
-      {
-         contrainte = contrainteCourante;
-         for(int i=0; i<k-1; i++) best[i] = slash[i];
-      }
-      return;
+      int scriber = calculeContrainte();
+      if(!scriber or slash[scriber]-1 == slash[scriber-1]) return;
+      slash[scriber-1]++;
    }
-
-   int next = m;
-   if(scriber != k-1) next = slash[scriber];
-
-   for(int i=slash[scriber-1]; i<next; i++)
-   {
-      slash[scriber-1] = i;
-      copying_books(scriber-1);
-   }
-   slash[scriber-1] = scriber;
 }
 
 int calculeContrainte()
 {
-   int som=0, top=0, scriber=0;
+   int som=0, topSom=0, scriber=0, topScriber=0;
+
    for(int i=0; i<m; i++)
    {
       if(i==slash[scriber])
       {
-         top = max(top, som);
+         if(topSom < som)
+         {
+            topSom = som;
+            topScriber = scriber;
+         }
          som = 0;
          scriber++;
       }
       som += p[i];
    }
-   top = max(top, som);
-   return top;
+
+   if(topSom < som)
+   {
+      topSom = som;
+      topScriber = scriber;
+   }
+
+   if(topSom < contrainte)
+   {
+      contrainte = topSom;
+      for(int i=0; i<k-1; i++) best[i] = slash[i];
+   }
+   return topScriber;
 }
