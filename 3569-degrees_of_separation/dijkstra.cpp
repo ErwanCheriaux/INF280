@@ -12,7 +12,7 @@ using namespace std;
 const int MAXN = 100;
 const int MAXLEN = 5;
 
-vector<pair<int, int>> Adj[MAXN];
+vector<int> Adj[MAXN];
 
 unsigned int Dist[MAXN];
 typedef pair<unsigned int, int> WeightNode; // weight goes first
@@ -27,13 +27,11 @@ void Dijkstra(int root)
    {
       int u = Q.top().second;              // get node with least priority
       Q.pop();
-      for(auto tmp : Adj[u])
+      for(auto v : Adj[u])
       {
-         int v = tmp.first;
-         unsigned int weight = tmp.second;
-         if (Dist[v] > Dist[u] + weight)   // shorter path found?
+         if (Dist[v] > Dist[u] + 1)   // shorter path found?
          {
-            Dist[v] = Dist[u] + weight;
+            Dist[v] = Dist[u] + 1;
             Q.push(make_pair(Dist[v], v)); // simply push, no update here
          }
       }
