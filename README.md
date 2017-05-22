@@ -20,4 +20,8 @@ Pour uDebug:
 
 - [X] 3983 Robotruck
 - [X] 2474 Balloons in a Box
-- [ ] 5540 Copying Books
+- [X] 5540 Copying Books
+
+- [ ] 3569 Degrees of Separation
+- [ ] 2939 Men at work
+- [ ] 4210 Almost Shortest Path
