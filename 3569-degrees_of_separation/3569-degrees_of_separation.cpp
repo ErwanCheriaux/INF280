@@ -9,5 +9,18 @@ using namespace std;
 
 int main(void)
 {
-   return 0;
+   while(1)
+   {
+      int P, R;
+
+      scanf("%d %d", &P, &R);
+      if(!P and !R) return 0;
+
+      for(int i=0; i<R; i++)
+      {
+         string str1, str2;
+         cin >> str1 >> str2;
+         cout << str1 << " " << str2 << endl;
+      }
+   }
 }
