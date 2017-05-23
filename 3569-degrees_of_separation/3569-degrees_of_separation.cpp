@@ -30,6 +30,7 @@ int main(void)
       scanf("%d %d", &P, &R);
       if(!P and !R) return 0;
 
+      node.clear();
       for(int i=0; i<MAXN; i++) Adj[i].clear();
 
       for(int i=0; i<R; i++)
@@ -49,8 +50,8 @@ int main(void)
          for(int j=0; j<N; j++)
             degree_of_separation = max(degree_of_separation,Dist[i][j]);
 
-      if(degree_of_separation == 50) printf("Network %d: DISCONNECTED\n", cpt++);
-      else                           printf("Network %d: %d\n", cpt++, degree_of_separation);
+      if(degree_of_separation == 50) printf("Network %d: DISCONNECTED\n\n", cpt++);
+      else                           printf("Network %d: %d\n\n", cpt++, degree_of_separation);
    }
 }
 
@@ -66,7 +67,7 @@ void FloydWarshall()
          Dist[u][v] = 1;
    }
 
-   for (int k=0; k < N; k++) // check sub-path combinations
+   for(int k=0; k < N; k++) // check sub-path combinations
       for(int i=0; i < N; i++)
          for(int j=0; j < N; j++) // concatenate paths
             Dist[i][j] = min(Dist[i][j], Dist[i][k] + Dist[k][j]);
