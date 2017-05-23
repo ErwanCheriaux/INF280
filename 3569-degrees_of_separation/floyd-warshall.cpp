@@ -13,7 +13,7 @@ const int N = 100;
 const int MAXN = 100;
 const int MAXLEN = 5;
 
-vector<pair<int, int>> Adj[MAXN];
+vector<int> Adj[MAXN];
 
 int Dist[MAXN][MAXN];
 void FloydWarshall()
@@ -23,8 +23,8 @@ void FloydWarshall()
    for(int u=0; u < N; u++)
    {
       Dist[u][u] = 0;
-      for(auto tmp : Adj[u])
-         Dist[u][tmp.first] = tmp.second;
+      for(auto v : Adj[u])
+         Dist[u][v] = 1;
    }
 
    for (int k=0; k < N; k++) // check sub-path combinations
