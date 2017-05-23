@@ -22,6 +22,6 @@ Pour uDebug:
 - [X] 2474 Balloons in a Box
 - [X] 5540 Copying Books
 
-- [ ] 3569 Degrees of Separation
+- [X] 3569 Degrees of Separation
 - [ ] 2939 Men at work
 - [ ] 4210 Almost Shortest Path

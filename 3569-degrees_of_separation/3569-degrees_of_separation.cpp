@@ -9,13 +9,12 @@
 
 using namespace std;
 
-const int MAXN   = 50;
-const int MAXLEN = 50;
+const int MAXN = 50;
 
 vector<int> Adj[MAXN];
 map<string,int> node;
 
-int N;
+int N, MAXLEN;
 int Dist[MAXN][MAXN];
 void FloydWarshall();
 
@@ -44,14 +43,14 @@ int main(void)
          Adj[node[str2]].push_back(node[str1]);
       }
 
-      N = node.size();
+      N = MAXLEN = P;
       FloydWarshall();
       for(int i=0; i<N; i++)
          for(int j=0; j<N; j++)
             degree_of_separation = max(degree_of_separation,Dist[i][j]);
 
-      if(degree_of_separation == 50) printf("Network %d: DISCONNECTED\n\n", cpt++);
-      else                           printf("Network %d: %d\n\n", cpt++, degree_of_separation);
+      if(degree_of_separation >= N) printf("Network %d: DISCONNECTED\n\n", cpt++);
+      else                          printf("Network %d: %d\n\n", cpt++, degree_of_separation);
    }
 }
 
