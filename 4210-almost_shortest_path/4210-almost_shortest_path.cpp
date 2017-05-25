@@ -75,6 +75,7 @@ void Dijkstra(int root)
    fill_n(Dist, MAXN, MAXLEN);
    Dist[root] = 0;
    Q.push(make_pair(0, root));
+   path.clear();
    while(!Q.empty())
    {
       int u = Q.top().second;              // get node with least priority
