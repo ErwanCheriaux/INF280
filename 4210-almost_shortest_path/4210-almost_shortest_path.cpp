@@ -40,10 +40,25 @@ int main(void)
 
       //recherche du plus court chemin
       Dijkstra(S);
-      shortest_path = Dist[D];
 
-      //recherche du presque plus court chemin
-      //while(Dist[D] == shortest_path) Dijkstra(S);
+      if(Dist[D] != INT_MAX)
+      {
+         //recherche du presque plus court chemin
+         shortest_path = Dist[D];
+         while(Dist[D] == shortest_path)
+         {
+            //suppression du chemin le plus court
+            int node_s, node_d = D;
+            do
+            {
+               for(auto tmp : path) if(tmp.second == node_d) node_s = tmp.first;
+               for(auto tmp : Adj[node_s]) if(tmp.first == node_d) //supp
+               for(auto tmp : Adj[node_d]) if(tmp.first == node_s) //supp
+               node_d = node_s;
+            } while(node_s != S);
+            Dijkstra(S);
+         }
+      }
 
       //output
       if(Dist[D] == INT_MAX) printf("-1\n");
@@ -51,6 +66,10 @@ int main(void)
    }
 }
 
+/* 
+ * Alogorithme récupéré dans les slides de cours 
+ * et adapté pour les besoins du problème
+ */
 void Dijkstra(int root)
 {
    fill_n(Dist, MAXN, MAXLEN);
@@ -68,10 +87,14 @@ void Dijkstra(int root)
          {
             Dist[v] = Dist[u] + weight;
             Q.push(make_pair(Dist[v], v)); // simply push, no update here
-            for(auto edge : path) if(edge.second == v) path.remove(edge); 
-            path.push_back(make_pair(u, v));
+            int i=0;
+            for(auto edge : path) 
+            {
+               if(edge.second == v) path[i] = make_pair(u,v);
+               else i++;
+            }
+            if(i == path.size()) path.push_back(make_pair(u,v));
          }
       }
-      int a =1;
    }
 }
