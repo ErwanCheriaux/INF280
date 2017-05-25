@@ -13,6 +13,7 @@ using namespace std;
 const unsigned int MAXN = 500;
 const unsigned int MAXLEN = INT_MAX;
 vector<pair<int,int>> Adj[MAXN];
+vector<pair<int,int>> path;
 
 unsigned int Dist[MAXN];
 typedef pair<unsigned int, int> WeightNode; // weight goes first
@@ -42,7 +43,7 @@ int main(void)
       shortest_path = Dist[D];
 
       //recherche du presque plus court chemin
-      while(Dist[D] == shortest_path) Dijkstra(S);
+      //while(Dist[D] == shortest_path) Dijkstra(S);
 
       //output
       if(Dist[D] == INT_MAX) printf("-1\n");
@@ -67,7 +68,10 @@ void Dijkstra(int root)
          {
             Dist[v] = Dist[u] + weight;
             Q.push(make_pair(Dist[v], v)); // simply push, no update here
+            for(auto edge : path) if(edge.second == v) path.remove(edge); 
+            path.push_back(make_pair(u, v));
          }
       }
+      int a =1;
    }
 }
