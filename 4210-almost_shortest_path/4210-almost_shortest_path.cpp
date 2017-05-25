@@ -10,8 +10,8 @@
 
 using namespace std;
 
-const int MAXN = 100;
-const int MAXLEN = INT_MAX;
+const unsigned int MAXN = 500;
+const unsigned int MAXLEN = INT_MAX;
 vector<pair<int,int>> Adj[MAXN];
 
 unsigned int Dist[MAXN];
@@ -24,7 +24,7 @@ int main(void)
 {
    while(1)
    {
-      int N, M, S, D, U, V, P;
+      int N, M, S, D, U, V, P, shortest_path;
       scanf("%d %d", &N, &M);
 
       if(!N and !M) return 0;
@@ -37,8 +37,16 @@ int main(void)
          Adj[U].push_back(make_pair(V,P));
       }
 
+      //recherche du plus court chemin
       Dijkstra(S);
-      printf("shortest path : %d\n", Dist[D]);
+      shortest_path = Dist[D];
+
+      //recherche du presque plus court chemin
+      while(Dist[D] == shortest_path) Dijkstra(S);
+
+      //output
+      if(Dist[D] == INT_MAX) printf("-1\n");
+      else                   printf("%d\n", Dist[D]);
    }
 }
 
