@@ -88,13 +88,13 @@ void Dijkstra(int root)
          {
             Dist[v] = Dist[u] + weight;
             Q.push(make_pair(Dist[v], v)); // simply push, no update here
-            int i=0;
-            for(auto edge : path) 
+            int index=0;
+            for(auto edge : path)
             {
-               if(edge.second == v) path[i] = make_pair(u,v);
-               else i++;
+               if(edge.second == v) path.erase(path.begin()+index);
+               index++;
             }
-            if(i == path.size()) path.push_back(make_pair(u,v));
+            path.push_back(make_pair(u,v));
          }
       }
    }
