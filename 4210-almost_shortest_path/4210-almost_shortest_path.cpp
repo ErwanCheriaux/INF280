@@ -32,6 +32,7 @@ int main(void)
 
       scanf("%d %d", &S, &D);
 
+      for(int i=0; i<N; i++) Adj[i].clear();
       for(int i=0; i<M; i++)
       {
          scanf("%d %d %d", &U, &V, &P);
@@ -53,7 +54,6 @@ int main(void)
             {
                for(auto tmp : path) if(tmp.second == node_d) node_s = tmp.first;
                for(auto &tmp : Adj[node_s]) if(tmp.first == node_d) tmp.second = INT_MAX;
-               for(auto &tmp : Adj[node_d]) if(tmp.first == node_s) tmp.second = INT_MAX;
                node_d = node_s;
             } while(node_s != S);
             Dijkstra(S);
