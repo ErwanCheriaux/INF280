@@ -13,6 +13,7 @@ using namespace std;
 const int MAXN = 50*50;
 const int MAXLEN = INT_MAX;
 
+unsigned int time_cpt;
 vector<pair<int,int>> Adj[MAXN];
 
 unsigned int Dist[MAXN];
@@ -20,6 +21,7 @@ typedef pair<unsigned int, int> WeightNode; // weight goes first
 priority_queue<WeightNode, vector<WeightNode>, greater<WeightNode>> Q;
 
 void Dijkstra(int root);
+int  getWeight(int weight);
 
 int main(void)
 {
@@ -56,6 +58,7 @@ int main(void)
          }
       }
 
+      time_cpt=0;
       Dijkstra(0);
 
       printf("%d\n", Dist[N*N-1]);
@@ -63,6 +66,10 @@ int main(void)
    return 0;
 }
 
+/* 
+ * Alogorithme récupéré dans les slides de cours 
+ * et adapté pour les besoins du problème
+ */
 void Dijkstra(int root)
 {
    fill_n(Dist, MAXN, MAXLEN);
@@ -71,11 +78,12 @@ void Dijkstra(int root)
    while(!Q.empty())
    {
       int u = Q.top().second;              // get node with least priority
+      time_cpt = Dist[u]+1;
       Q.pop();
       for(auto tmp : Adj[u])
       {
          int v = tmp.first;
-         unsigned int weight = tmp.second;
+         unsigned int weight = getWeight(tmp.second);
          if (Dist[v] > Dist[u] + weight)
          {
             Dist[v] = Dist[u] + weight;
@@ -83,4 +91,13 @@ void Dijkstra(int root)
          }
       }
    }
+}
+
+int getWeight(int weight)
+{
+   if(!weight) return 1;
+
+   int res = time_cpt % (weight*2);
+   if(res<weight) return 1;
+   else           return (weight*2-res+1);
 }
