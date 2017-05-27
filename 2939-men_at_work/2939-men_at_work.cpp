@@ -26,6 +26,7 @@ int  getWeight(int weight);
 int main(void)
 {
    int N;
+   bool first = true;
    while(scanf("%d\n", &N)==1)
    {
       char maze[N][N];
@@ -61,8 +62,11 @@ int main(void)
       time_cpt=0;
       Dijkstra(0);
 
-      printf("%d\n", Dist[N*N-1]);
+      if(first) first = false;
+      else      printf("\n");
 
+      if(Dist[N*N-1] < INT_MAX) printf("%d\n", Dist[N*N-1]);
+      else                       printf("NO\n");
       //initialisation Adj
       for(int i=0; i<N*N; i++) Adj[i].clear();
    }
