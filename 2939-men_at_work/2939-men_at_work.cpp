@@ -50,10 +50,10 @@ int main(void)
       for(int i=0; i<N; i++) {
          for(int j=0; j<N; j++) {
             if(maze[i][j] == '.') {
-               if(i>0   and maze[i-1][j] == '.') Adj[10*i+j].push_back(make_pair(10*(i-1)+j,work[i-1][j]-48));
-               if(i<N-1 and maze[i+1][j] == '.') Adj[10*i+j].push_back(make_pair(10*(i+1)+j,work[i+1][j]-48));
-               if(j>0   and maze[i][j-1] == '.') Adj[10*i+j].push_back(make_pair(10*i+j-1  ,work[i][j-1]-48));
-               if(j<N-1 and maze[i][j+1] == '.') Adj[10*i+j].push_back(make_pair(10*i+j+1  ,work[i][j+1]-48));
+               if(i>0   and maze[i-1][j] == '.') Adj[N*i+j].push_back(make_pair(N*(i-1)+j,work[i-1][j]-48));
+               if(i<N-1 and maze[i+1][j] == '.') Adj[N*i+j].push_back(make_pair(N*(i+1)+j,work[i+1][j]-48));
+               if(j>0   and maze[i][j-1] == '.') Adj[N*i+j].push_back(make_pair(N*i+j-1  ,work[i][j-1]-48));
+               if(j<N-1 and maze[i][j+1] == '.') Adj[N*i+j].push_back(make_pair(N*i+j+1  ,work[i][j+1]-48));
             }
          }
       }
@@ -62,6 +62,9 @@ int main(void)
       Dijkstra(0);
 
       printf("%d\n", Dist[N*N-1]);
+
+      //initialisation Adj
+      for(int i=0; i<N*N; i++) Adj[i].clear();
    }
    return 0;
 }
