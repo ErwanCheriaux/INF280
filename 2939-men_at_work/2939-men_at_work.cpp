@@ -48,10 +48,10 @@ int main(void)
       for(int i=0; i<N; i++) {
          for(int j=0; j<N; j++) {
             if(maze[i][j] == '.') {
-               if(i>0   and maze[i-1][j] == '.') Adj[10*i+j].push_back(make_pair(maze[i-1][j],work[i-1][j]));
-               if(i<N-1 and maze[i+1][j] == '.') Adj[10*i+j].push_back(make_pair(maze[i+1][j],work[i+1][j]));
-               if(j>0   and maze[i][j-1] == '.') Adj[10*i+j].push_back(make_pair(maze[i][j-1],work[i][j-1]));
-               if(j<N-1 and maze[i][j+1] == '.') Adj[10*i+j].push_back(make_pair(maze[i][j+1],work[i][j+1]));
+               if(i>0   and maze[i-1][j] == '.') Adj[10*i+j].push_back(make_pair(10*(i-1)+j,work[i-1][j]-48));
+               if(i<N-1 and maze[i+1][j] == '.') Adj[10*i+j].push_back(make_pair(10*(i+1)+j,work[i+1][j]-48));
+               if(j>0   and maze[i][j-1] == '.') Adj[10*i+j].push_back(make_pair(10*i+j-1  ,work[i][j-1]-48));
+               if(j<N-1 and maze[i][j+1] == '.') Adj[10*i+j].push_back(make_pair(10*i+j+1  ,work[i][j+1]-48));
             }
          }
       }
