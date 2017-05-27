@@ -66,7 +66,7 @@ int main(void)
       if(first) first = false;
       else      printf("\n");
 
-      if(Dist[N*N-1] >= INT_MAX) printf("%d\n", Dist[N*N-1]);
+      if(Dist[N*N-1] < INT_MAX) printf("%d\n", Dist[N*N-1]);
       else                       printf("NO\n");
 
       //initialisation Adj
