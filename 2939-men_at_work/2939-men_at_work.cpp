@@ -60,7 +60,7 @@ int main(void)
       printf("%d\n", time_cpt);
 
       //initialisation Adj
-      for(int i=0; i<N*N; i++) Adj[i].clear();
+      for(int i=0; i<N*N; i++) {Adj[i].clear(); Visited[i].clear();}
    }
    return 0;
 }
@@ -77,6 +77,7 @@ void BFS(int root)
       int u = Q.front();
       Q.pop();
       if(Visited[u]) continue;
+      Visited[u] = true;
       for(auto v : Adj[u])
       {
          Q.push(v);
