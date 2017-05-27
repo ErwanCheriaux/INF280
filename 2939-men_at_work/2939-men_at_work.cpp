@@ -13,7 +13,7 @@ int main(void)
    while(scanf("%d\n", &N)==1)
    {
       char maze[N][N];
-      int  work[N][N];
+      char work[N][N];
 
       for(int i=0; i<N; i++) {
          for(int j=0; j<N; j++) {
@@ -24,10 +24,8 @@ int main(void)
 
       for(int i=0; i<N; i++) {
          for(int j=0; j<N; j++) {
-            char c;
-            if(j==N-1) scanf("%c\n", &c);
-            else       scanf("%c",   &c);
-            work[i][j] = atoi(c);
+            if(j==N-1) scanf("%c\n", &work[i][j]);
+            else       scanf("%c",   &work[i][j]);
          }
       }
 
@@ -40,7 +38,7 @@ int main(void)
 
       for(int i=0; i<N; i++) {
          for(int j=0; j<N; j++) {
-            printf("%d", work[i][j]);
+            printf("%c", work[i][j]);
          }
          printf("\n");
       }
