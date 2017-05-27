@@ -16,6 +16,7 @@ unsigned int time_cpt;
 vector<int> Adj[MAXN];
 queue<int> Q;
 bool Visited[MAXN] = {};
+int  Dist[MAXN];
 
 void BFS(int root);
 
@@ -57,10 +58,10 @@ int main(void)
       time_cpt=0;
       BFS(0);
 
-      printf("%d\n", time_cpt);
+      printf("%d\n", Dist[N*N-1]);
 
       //initialisation Adj
-      for(int i=0; i<N*N; i++) {Adj[i].clear(); Visited[i].clear();}
+      for(int i=0; i<N*N; i++) {Adj[i].clear(); Visited[i] = false;}
    }
    return 0;
 }
@@ -81,6 +82,7 @@ void BFS(int root)
       for(auto v : Adj[u])
       {
          Q.push(v);
+         Dist[v] = Dist[u]+1;
       }
    }
 }
