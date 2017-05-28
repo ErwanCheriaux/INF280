@@ -24,4 +24,4 @@ Pour uDebug:
 
 - [X] 3569 Degrees of Separation
 - [ ] 2939 Men at work
-- [ ] 4210 Almost Shortest Path
+- [X] 4210 Almost Shortest Path
