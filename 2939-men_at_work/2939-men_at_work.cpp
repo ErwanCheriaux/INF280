@@ -21,7 +21,8 @@ typedef pair<unsigned int, int> WeightNode; // weight goes first
 priority_queue<WeightNode, vector<WeightNode>, greater<WeightNode>> Q;
 
 void Dijkstra(int root);
-int  getWeight(int weight);
+int getWeight(int weight);
+int getStay(int stay);
 
 int main(void)
 {
@@ -66,7 +67,7 @@ int main(void)
       else      printf("\n");
 
       if(Dist[N*N-1] < INT_MAX) printf("%d\n", Dist[N*N-1]);
-      else                       printf("NO\n");
+      else                      printf("NO\n");
       //initialisation Adj
       for(int i=0; i<N*N; i++) Adj[i].clear();
    }
@@ -85,12 +86,14 @@ void Dijkstra(int root)
    while(!Q.empty())
    {
       int u = Q.top().second;              // get node with least priority
+      int stay = getStay(Q.top().first);
       time_cpt = Dist[u]+1;
       Q.pop();
       for(auto tmp : Adj[u])
       {
          int v = tmp.first;
          unsigned int weight = getWeight(tmp.second);
+         if(weight > stay) weight = INT_MAX;
          if (Dist[v] > Dist[u] + weight)
          {
             Dist[v] = Dist[u] + weight;
@@ -107,4 +110,13 @@ int getWeight(int weight)
    int res = time_cpt % (weight*2);
    if(res<weight) return 1;
    else           return (weight*2-res+1);
+}
+
+int getStay(int stay)
+{
+   if(!stay) return INT_MAX;
+
+   int res = time_cpt % (stay*2);
+   if(res<stay) return stay-res;
+   else         return 0;
 }
