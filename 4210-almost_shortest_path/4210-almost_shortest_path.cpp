@@ -61,6 +61,7 @@ int main(void)
       }
 
       //output
+      //printf("%d %d %d %d -> ", N, M, S, D);
       if(Dist[D] == INT_MAX) printf("-1\n");
       else                   printf("%d\n", Dist[D]);
 
