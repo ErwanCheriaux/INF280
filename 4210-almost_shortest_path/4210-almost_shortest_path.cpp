@@ -7,13 +7,14 @@
 #include <climits>
 #include <queue>
 #include <vector>
+#include <tuple>
 
 using namespace std;
 
 const unsigned int MAXN = 500;
 const unsigned int MAXLEN = INT_MAX;
 vector<pair<int,int>> Adj[MAXN];
-vector<pair<int,int>> path;
+vector<tuple<int,int,int>> path;
 
 unsigned int Dist[MAXN];
 typedef pair<unsigned int, int> WeightNode; // weight goes first
@@ -32,7 +33,6 @@ int main(void)
 
       scanf("%d %d", &S, &D);
 
-      for(int i=0; i<N; i++) Adj[i].clear();
       for(int i=0; i<M; i++)
       {
          scanf("%d %d %d", &U, &V, &P);
@@ -49,11 +49,11 @@ int main(void)
          while(Dist[D] == shortest_path)
          {
             //suppression du chemin le plus court
-            int node_s, node_d = D;
+            int w, node_s, node_d = D;
             do
             {
-               for(auto tmp : path) if(tmp.second == node_d) node_s = tmp.first;
-               for(auto &tmp : Adj[node_s]) if(tmp.first == node_d) tmp.second = INT_MAX;
+               for(auto tmp : path) if(get<1>(tmp) == node_d) {node_s = get<0>(tmp); w = get<2>(tmp);}
+               for(auto &tmp : Adj[node_s]) if(tmp.first == node_d and tmp.second == w) tmp.second = INT_MAX;
                node_d = node_s;
             } while(node_s != S);
             Dijkstra(S);
@@ -63,6 +63,8 @@ int main(void)
       //output
       if(Dist[D] == INT_MAX) printf("-1\n");
       else                   printf("%d\n", Dist[D]);
+
+      for(int i=0; i<N; i++) Adj[i].clear();
    }
 }
 
@@ -91,10 +93,10 @@ void Dijkstra(int root)
             int index=0;
             for(auto edge : path)
             {
-               if(edge.second == v) path.erase(path.begin()+index);
+               if(get<1>(edge) == v) path.erase(path.begin()+index);
                index++;
             }
-            path.push_back(make_pair(u,v));
+            path.push_back(make_tuple(u,v,weight));
          }
       }
    }
