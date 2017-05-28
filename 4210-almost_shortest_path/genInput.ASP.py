@@ -3,8 +3,8 @@ from random import randint
 f = open("ASP.input","w")
 
 for i in range(1000):
-   N = randint(2, 500)
-   M = randint(1, 10000)
+   N = randint(2, 8)
+   M = randint(1, 10)
    S = randint(0, N-1)
    D = randint(0, N-1)
    while(S == D):
@@ -17,7 +17,7 @@ for i in range(1000):
       V = randint(0, N-1)
       while(U == V):
          V = randint(0, N-1)
-      P = randint(1, 1000)
+      P = randint(1, 20)
       f.write(str(U) + " " + str(V) + " " + str(P) + "\n")
 
    f.write("\n")

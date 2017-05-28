@@ -21,12 +21,14 @@ typedef pair<unsigned int, int> WeightNode; // weight goes first
 priority_queue<WeightNode, vector<WeightNode>, greater<WeightNode>> Q;
 
 void Dijkstra(int root);
+void suppShortestPath(int root);
+
+int N, M, S, D, U, V, P, shortest_path;
 
 int main(void)
 {
    while(1)
    {
-      int N, M, S, D, U, V, P, shortest_path;
       scanf("%d %d", &N, &M);
 
       if(!N and !M) return 0;
@@ -49,19 +51,12 @@ int main(void)
          while(Dist[D] == shortest_path)
          {
             //suppression du chemin le plus court
-            int w, node_s, node_d = D;
-            do
-            {
-               for(auto tmp : path) if(get<1>(tmp) == node_d) {node_s = get<0>(tmp); w = get<2>(tmp);}
-               for(auto &tmp : Adj[node_s]) if(tmp.first == node_d and tmp.second == w) tmp.second = INT_MAX;
-               node_d = node_s;
-            } while(node_s != S);
+            suppShortestPath(D);
             Dijkstra(S);
          }
       }
 
       //output
-      //printf("%d %d %d %d -> ", N, M, S, D);
       if(Dist[D] == INT_MAX) printf("-1\n");
       else                   printf("%d\n", Dist[D]);
 
@@ -87,7 +82,8 @@ void Dijkstra(int root)
       {
          int v = tmp.first;
          unsigned int weight = tmp.second;
-         if (Dist[v] > Dist[u] + weight)
+         if (Dist[v] == Dist[u] + weight) path.push_back(make_tuple(u,v,weight));
+         else if (Dist[v] > Dist[u] + weight)
          {
             Dist[v] = Dist[u] + weight;
             Q.push(make_pair(Dist[v], v)); // simply push, no update here
@@ -99,6 +95,24 @@ void Dijkstra(int root)
             }
             path.push_back(make_tuple(u,v,weight));
          }
+      }
+   }
+}
+
+void suppShortestPath(int root)
+{
+   if(root == S) return;
+
+   int w, node;
+   for(auto tmp : path) 
+   {
+      if(get<1>(tmp) == root)
+      {
+         node = get<0>(tmp);
+         w    = get<2>(tmp);
+         for(auto &tmp : Adj[node]) if(tmp.first == root and tmp.second == w) tmp.second = INT_MAX;
+       
+         suppShortestPath(node);
       }
    }
 }
