@@ -25,3 +25,7 @@ Pour uDebug:
 - [X] 3569 Degrees of Separation
 - [ ] 2939 Men at work
 - [X] 4210 Almost Shortest Path
+
+- [ ] 2036 The Necklace
+- [ ] 3505 Buy or Build
+- [ ] 3126 Taxi Cab Scheme
