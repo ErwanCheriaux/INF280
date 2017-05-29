@@ -50,9 +50,12 @@ int main(void)
 
       //recherche d'un chemin passant par tous les noeuds
       //sans se séparer en plusieurs chemins
-      oppo = Adj[0][0].second;
       node_cpt=0;
-      explore(0);
+      if(Adj[0].size())
+      {
+         oppo = Adj[0][0].second;
+         explore(0);
+      }
 
       //output
       printf("Case #%d\n", t+1);
@@ -98,7 +101,7 @@ void explore(int root)
       }
    }
 
-   path.pop();
+   path.pop_back();
    visited[root] = false;
    node_cpt--;
 }
