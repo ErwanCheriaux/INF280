@@ -14,7 +14,7 @@ using namespace std;
 const unsigned int MAXN = 1000;
 
 bool visited[MAXN];
-pair<int,int> necklace[MAXN];
+vector<pair<int, int>> necklace;
 vector<pair<int,bool>> Adj[MAXN];
 vector<int> path;
 
@@ -32,7 +32,7 @@ int main(void)
       for(int n=0; n<N; n++)
       {
          scanf("%d %d\n", &L, &R);
-         necklace[n] = make_pair(L,R);
+         necklace.push_back(make_pair(L,R));
          for(int i=0; i<n; i++)
          {
             if(necklace[i].first  == necklace[n].first)
@@ -51,11 +51,8 @@ int main(void)
       //recherche d'un chemin passant par tous les noeuds
       //sans se séparer en plusieurs chemins
       node_cpt=0;
-      if(Adj[0].size())
-      {
-         oppo = Adj[0][0].second;
-         explore(0);
-      }
+      oppo =true;
+      explore(0);
 
       //output
       printf("Case #%d\n", t+1);
@@ -74,8 +71,10 @@ int main(void)
 
       if(t<T-1) printf("\n");
 
-      //réinitialisation de la liste d'adjacence
-      //et de visite des noeuds
+      //réinitialisation de la liste des noeuds
+      //de la liste d'adjacence et
+      //de la visite des noeuds
+      necklace.clear();
       for(int n=0; n<N; n++)
       {
          Adj[n].clear();
@@ -94,8 +93,9 @@ void explore(int root)
 
    for(auto tmp : Adj[root])
    {
-      if(!visited[root] and tmp.second == oppo)
+      if(!visited[root] and (tmp.second == oppo or !root))
       {
+         if(!root) oppo = tmp.second;
          explore(tmp.first);
          if(node_cpt == N) return;
       }
