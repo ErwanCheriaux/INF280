@@ -86,14 +86,14 @@ int main(void)
 
 void explore(int root)
 {
-   if(node_cpt++ == N) return;
-   visited[root] = true;
    path.push_back(root);
+   visited[root] = true;
+   if(++node_cpt == N) return;
    oppo = !oppo;
 
    for(auto tmp : Adj[root])
    {
-      if(!visited[root] and (tmp.second == oppo or !root))
+      if(!visited[tmp.first] and (tmp.second == oppo or !root))
       {
          if(!root) oppo = tmp.second;
          explore(tmp.first);
@@ -101,6 +101,7 @@ void explore(int root)
       }
    }
 
+   oppo = !oppo;
    path.pop_back();
    visited[root] = false;
    node_cpt--;
