@@ -13,9 +13,9 @@
 
 using namespace std;
 
-const unsigned int MAXN = 1000;
+const unsigned int MAXN = 51;
 
-set<int> colors;
+set<int> Colors;
 vector<int> Circuit;
 vector<int> Adj[MAXN];
 
@@ -36,8 +36,8 @@ int main(void)
       for(int n=0; n<N; n++)
       {
          scanf("%d %d\n", &L, &R);
-         if(colors.find(L) == colors.end()) colors.insert(L);
-         if(colors.find(R) == colors.end()) colors.insert(R);
+         if(Colors.find(L) == Colors.end()) Colors.insert(L);
+         if(Colors.find(R) == Colors.end()) Colors.insert(R);
          Adj[L].push_back(R);
          Adj[R].push_back(L);
       }
@@ -45,7 +45,7 @@ int main(void)
       //output
       printf("Case #%d\n", t+1);
 
-      if(Hierholzer(*colors.begin())){
+      if(Hierholzer(*Colors.begin())){
          for(int n=0; n<N; n++){
             printf("%d %d\n", Circuit[n], Circuit[n+1]);
          }
@@ -55,12 +55,12 @@ int main(void)
       if(t<T-1) printf("\n");
 
       //réinitialisation de la liste d'adjacence
-      for(auto color : colors) 
+      for(auto color : Colors) 
       {
          Adj[color].clear();
          Visited[color]=false;
       }
-      colors.clear();
+      Colors.clear();
       Circuit.clear();
    }
    return 0;
@@ -82,10 +82,10 @@ void BFS(int root)
 bool Hierholzer(int root)
 {
    BFS(root);
-   for(auto color : colors) if(!Visited[color])       return false;
-   for(auto color : colors) if(Adj[color].size() & 1) return false;
+   for(auto color : Colors) if(!Visited[color])       return false;
+   for(auto color : Colors) if(Adj[color].size() & 1) return false;
 
-   int v = root; // find node with odd degree, else start with node 0
+   int v = root;
 
    stack<int> Stack;
    Stack.push(v);
@@ -103,7 +103,7 @@ bool Hierholzer(int root)
          for(auto node : Adj[tmp])
          {
             if(node == v) Adj[tmp].erase(Adj[tmp].begin()+index);
-            index++;
+            else          index++;
          }
          v = tmp;
       }
