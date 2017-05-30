@@ -45,14 +45,12 @@ int main(void)
       //output
       printf("Case #%d\n", t+1);
 
-      if(Hierholzer(1))
-      {
-         for(auto tmp : Circuit)
-         {
-            printf("\n");
+      if(Hierholzer(*colors.begin())){
+         for(int n=0; n<N; n++){
+            printf("%d %d\n", Circuit[n], Circuit[n+1]);
          }
       }
-      else printf("some beads may be lost\n");
+      else  printf("some beads may be lost\n");
 
       if(t<T-1) printf("\n");
 
@@ -63,6 +61,7 @@ int main(void)
          Visited[color]=false;
       }
       colors.clear();
+      Circuit.clear();
    }
    return 0;
 }
