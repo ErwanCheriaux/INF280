@@ -8,20 +8,24 @@
 #include <queue>
 #include <vector>
 #include <list>
+#include <set>
+#include <stack>
 
 using namespace std;
 
-const unsigned int MAXN = 1000;
+const unsigned int MAXN = 51;
 
-bool visited[MAXN];
-vector<pair<int, int>> necklace;
-vector<pair<int,bool>> Adj[MAXN];
-vector<int> path;
+set<int> Colors;
+vector<int> Circuit;
+vector<int> Adj[MAXN];
 
-void explore(int root);
+queue<int> Q;
+bool Visited[MAXN] = {};
 
-int T, N, L, R, node_cpt;
-bool oppo;
+int T, N, L, R;
+
+void BFS(int root);
+bool Hierholzer(int root);
 
 int main(void)
 {
@@ -32,77 +36,86 @@ int main(void)
       for(int n=0; n<N; n++)
       {
          scanf("%d %d\n", &L, &R);
-         necklace.push_back(make_pair(L,R));
-         for(int i=0; i<n; i++)
-         {
-            if(necklace[i].first  == necklace[n].first)
-            {
-               Adj[i].push_back(make_pair(n,false));
-               Adj[n].push_back(make_pair(i,false));
-            }
-            if(necklace[i].second == necklace[n].second) 
-            {
-               Adj[i].push_back(make_pair(n,true));
-               Adj[n].push_back(make_pair(i,true));
-            }
-         }
+         if(Colors.find(L) == Colors.end()) Colors.insert(L);
+         if(Colors.find(R) == Colors.end()) Colors.insert(R);
+         Adj[L].push_back(R);
+         Adj[R].push_back(L);
       }
-
-      //recherche d'un chemin passant par tous les noeuds
-      //sans se séparer en plusieurs chemins
-      node_cpt=0;
-      oppo =true;
-      explore(0);
 
       //output
       printf("Case #%d\n", t+1);
 
-      if(node_cpt != N) printf("some beads may be lost\n");
-      else
-      {
-         oppo = true;
-         for(auto tmp : path)
-         {
-            if(oppo) printf("%d %d\n", necklace[tmp].first, necklace[tmp].second);
-            else     printf("%d %d\n", necklace[tmp].second, necklace[tmp].first);
-            oppo = !oppo;
+      if(Hierholzer(*Colors.begin())){
+         for(int n=0; n<N; n++){
+            printf("%d %d\n", Circuit[n], Circuit[n+1]);
          }
       }
+      else  printf("some beads may be lost\n");
 
       if(t<T-1) printf("\n");
 
-      //réinitialisation de la liste des noeuds
-      //de la liste d'adjacence et
-      //de la visite des noeuds
-      necklace.clear();
-      for(int n=0; n<N; n++)
+      //réinitialisation de la liste d'adjacence
+      for(auto color : Colors) 
       {
-         Adj[n].clear();
-         visited[n] = false;
+         Adj[color].clear();
+         Visited[color]=false;
       }
+      Colors.clear();
+      Circuit.clear();
    }
    return 0;
 }
 
-void explore(int root)
+void BFS(int root)
 {
-   path.push_back(root);
-   visited[root] = true;
-   if(++node_cpt == N) return;
-   oppo = !oppo;
-
-   for(auto tmp : Adj[root])
+   Q.push(root);
+   while(!Q.empty())
    {
-      if(!visited[tmp.first] and (tmp.second == oppo or !root))
+      int u = Q.front();
+      Q.pop();
+      if(Visited[u]) continue;
+      Visited[u] = true;
+      for(auto v : Adj[u]) Q.push(v);
+   }
+}
+
+bool Hierholzer(int root)
+{
+   BFS(root);
+   for(auto color : Colors) if(!Visited[color])       return false;
+   for(auto color : Colors) if(Adj[color].size() & 1) return false;
+
+   int v = root;
+
+   stack<int> Stack;
+   Stack.push(v);
+
+   while(!Stack.empty())
+   {
+      if(!Adj[v].empty())
       {
-         if(!root) oppo = tmp.second;
-         explore(tmp.first);
-         if(node_cpt == N) return;
+         // follow edges until stuck
+         Stack.push(v);
+         int tmp = Adj[v][0];
+         Adj[v].erase(Adj[v].begin());
+         // remove edge, modifying graph
+         int index=0;
+         for(auto node : Adj[tmp])
+         {
+            if(node == v) Adj[tmp].erase(Adj[tmp].begin()+index);
+            else          index++;
+         }
+         v = tmp;
+      }
+      else
+      {
+         // got stuck: stack contains a circuit
+         Circuit.push_back(v);
+         // append node at the end of circuit
+         v = Stack.top();
+         // backtrack using stack, find larger circuit
+         Stack.pop();
       }
    }
-
-   oppo = !oppo;
-   path.pop_back();
-   visited[root] = false;
-   node_cpt--;
+   return true;
 }
