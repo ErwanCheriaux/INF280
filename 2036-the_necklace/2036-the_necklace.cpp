@@ -97,10 +97,15 @@ bool Hierholzer(int root)
       {
          // follow edges until stuck
          Stack.push(v);
-         int tmp = *Adj[v].begin();
-         Adj[v].erase(tmp);
+         int tmp = Adj[v][0];
+         Adj[v].erase(Adj[v].begin());
          // remove edge, modifying graph
-         Adj[tmp].erase(v);
+         int index=0;
+         for(auto node : Adj[tmp])
+         {
+            if(node == v) Adj[tmp].erase(Adj[tmp].begin()+index);
+            index++;
+         }
          v = tmp;
       }
       else
