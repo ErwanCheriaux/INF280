@@ -8,20 +8,23 @@
 #include <queue>
 #include <vector>
 #include <list>
+#include <set>
 
 using namespace std;
 
 const unsigned int MAXN = 1000;
 
-bool visited[MAXN];
-vector<pair<int, int>> necklace;
-vector<pair<int,bool>> Adj[MAXN];
+set<int> colors;
 vector<int> path;
+vector<int> Adj[MAXN];
 
-void explore(int root);
+queue<int> Q;
+bool Visited[MAXN] = {};
 
-int T, N, L, R, node_cpt;
-bool oppo;
+int T, N, L, R;
+
+void BFS(int root);
+bool eulerien();
 
 int main(void)
 {
@@ -32,77 +35,54 @@ int main(void)
       for(int n=0; n<N; n++)
       {
          scanf("%d %d\n", &L, &R);
-         necklace.push_back(make_pair(L,R));
-         for(int i=0; i<n; i++)
-         {
-            if(necklace[i].first  == necklace[n].first)
-            {
-               Adj[i].push_back(make_pair(n,false));
-               Adj[n].push_back(make_pair(i,false));
-            }
-            if(necklace[i].second == necklace[n].second) 
-            {
-               Adj[i].push_back(make_pair(n,true));
-               Adj[n].push_back(make_pair(i,true));
-            }
-         }
+         if(colors.find(L) == colors.end()) colors.insert(L);
+         if(colors.find(R) == colors.end()) colors.insert(R);
+         Adj[L].push_back(R);
+         Adj[R].push_back(L);
       }
-
-      //recherche d'un chemin passant par tous les noeuds
-      //sans se séparer en plusieurs chemins
-      node_cpt=0;
-      oppo =true;
-      explore(0);
 
       //output
       printf("Case #%d\n", t+1);
 
-      if(node_cpt != N) printf("some beads may be lost\n");
-      else
+      if(eulerien()) 
       {
-         oppo = true;
          for(auto tmp : path)
          {
-            if(oppo) printf("%d %d\n", necklace[tmp].first, necklace[tmp].second);
-            else     printf("%d %d\n", necklace[tmp].second, necklace[tmp].first);
-            oppo = !oppo;
+            printf("\n");
          }
       }
+      else printf("some beads may be lost\n");
 
       if(t<T-1) printf("\n");
 
-      //réinitialisation de la liste des noeuds
-      //de la liste d'adjacence et
-      //de la visite des noeuds
-      necklace.clear();
-      for(int n=0; n<N; n++)
+      //réinitialisation de la liste d'adjacence
+      for(auto color : colors) 
       {
-         Adj[n].clear();
-         visited[n] = false;
+         Adj[color].clear();
+         Visited[color]=false;
       }
+      colors.clear();
    }
    return 0;
 }
 
-void explore(int root)
+bool eulerien()
 {
-   path.push_back(root);
-   visited[root] = true;
-   if(++node_cpt == N) return;
-   oppo = !oppo;
+   BFS(1);
+   for(auto color : colors) if(!Visited[color])       return false;
+   for(auto color : colors) if(Adj[color].size() & 1) return false;
+   return true;
+}
 
-   for(auto tmp : Adj[root])
+void BFS(int root)
+{
+   Q.push(root);
+   while(!Q.empty())
    {
-      if(!visited[tmp.first] and (tmp.second == oppo or !root))
-      {
-         if(!root) oppo = tmp.second;
-         explore(tmp.first);
-         if(node_cpt == N) return;
-      }
+      int u = Q.front();
+      Q.pop();
+      if(Visited[u]) continue;
+      Visited[u] = true;
+      for(auto v : Adj[u]) Q.push(v);
    }
-
-   oppo = !oppo;
-   path.pop_back();
-   visited[root] = false;
-   node_cpt--;
 }
