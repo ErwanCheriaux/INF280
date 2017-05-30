@@ -9,13 +9,14 @@
 #include <vector>
 #include <list>
 #include <set>
+#include <stack>
 
 using namespace std;
 
 const unsigned int MAXN = 1000;
 
 set<int> colors;
-vector<int> path;
+vector<int> Circuit;
 vector<int> Adj[MAXN];
 
 queue<int> Q;
@@ -24,7 +25,7 @@ bool Visited[MAXN] = {};
 int T, N, L, R;
 
 void BFS(int root);
-bool eulerien();
+bool Hierholzer(int root);
 
 int main(void)
 {
@@ -44,9 +45,9 @@ int main(void)
       //output
       printf("Case #%d\n", t+1);
 
-      if(eulerien()) 
+      if(Hierholzer(1))
       {
-         for(auto tmp : path)
+         for(auto tmp : Circuit)
          {
             printf("\n");
          }
@@ -66,14 +67,6 @@ int main(void)
    return 0;
 }
 
-bool eulerien()
-{
-   BFS(1);
-   for(auto color : colors) if(!Visited[color])       return false;
-   for(auto color : colors) if(Adj[color].size() & 1) return false;
-   return true;
-}
-
 void BFS(int root)
 {
    Q.push(root);
@@ -85,4 +78,40 @@ void BFS(int root)
       Visited[u] = true;
       for(auto v : Adj[u]) Q.push(v);
    }
+}
+
+bool Hierholzer(int root)
+{
+   BFS(root);
+   for(auto color : colors) if(!Visited[color])       return false;
+   for(auto color : colors) if(Adj[color].size() & 1) return false;
+
+   int v = root; // find node with odd degree, else start with node 0
+
+   stack<int> Stack;
+   Stack.push(v);
+
+   while(!Stack.empty())
+   {
+      if(!Adj[v].empty())
+      {
+         // follow edges until stuck
+         Stack.push(v);
+         int tmp = *Adj[v].begin();
+         Adj[v].erase(tmp);
+         // remove edge, modifying graph
+         Adj[tmp].erase(v);
+         v = tmp;
+      }
+      else
+      {
+         // got stuck: stack contains a circuit
+         Circuit.push_back(v);
+         // append node at the end of circuit
+         v = Stack.top();
+         // backtrack using stack, find larger circuit
+         Stack.pop();
+      }
+   }
+   return true;
 }
