@@ -5,15 +5,14 @@
 #include <cstdint>
 #include <algorithm>
 #include <climits>
-#include <queue>
 #include <vector>
-#include <list>
-#include <set>
+#include <queue>
 #include <stack>
+#include <set>
 
 using namespace std;
 
-const unsigned int MAXN = 51;
+const int MAXN = 51;
 
 set<int> Colors;
 vector<int> Circuit;
@@ -96,15 +95,18 @@ bool Hierholzer(int root)
       {
          // follow edges until stuck
          Stack.push(v);
-         int tmp = Adj[v][0];
-         Adj[v].erase(Adj[v].begin());
+         int tmp = *Adj[v].begin();
+         auto it_tmp = Adj[v].begin();
+         auto it_v = Adj[tmp].begin();
+         int index = 0;
          // remove edge, modifying graph
-         int index=0;
+         Adj[v].erase(it_tmp);
          for(auto node : Adj[tmp])
          {
-            if(node == v) Adj[tmp].erase(Adj[tmp].begin()+index);
-            else          index++;
+            if(node == v) it_v = Adj[tmp].begin()+index;
+            index++;
          }
+         Adj[tmp].erase(it_v);
          v = tmp;
       }
       else
