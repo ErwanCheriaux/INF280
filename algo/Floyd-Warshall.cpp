@@ -4,16 +4,17 @@
 #include <iostream>
 #include <cstdint>
 #include <algorithm>
+#include <climits>
 #include <queue>
 #include <vector>
 
 using namespace std;
 
-const int N = 100;
-const int MAXN = 100;
-const int MAXLEN = 5;
+const int N      = 100;
+const int MAXN   = 100;
+const int MAXLEN = INT_MAX;
 
-vector<int> Adj[MAXN];
+vector<pair<int,int>> Adj[MAXN];
 
 int Dist[MAXN][MAXN];
 void FloydWarshall()
@@ -24,7 +25,7 @@ void FloydWarshall()
    {
       Dist[u][u] = 0;
       for(auto v : Adj[u])
-         Dist[u][v] = 1;
+         Dist[u][v.first] = v.second;
    }
 
    for (int k=0; k < N; k++) // check sub-path combinations

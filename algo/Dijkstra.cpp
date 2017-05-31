@@ -4,15 +4,16 @@
 #include <iostream>
 #include <cstdint>
 #include <algorithm>
+#include <climits>
 #include <queue>
 #include <vector>
 
 using namespace std;
 
-const int MAXN = 100;
-const int MAXLEN = 5;
+const int MAXN   = 100;
+const int MAXLEN = INT_MAX;
 
-vector<int> Adj[MAXN];
+vector<pair<int,int>> Adj[MAXN];
 
 unsigned int Dist[MAXN];
 typedef pair<unsigned int, int> WeightNode; // weight goes first
@@ -27,11 +28,13 @@ void Dijkstra(int root)
    {
       int u = Q.top().second;              // get node with least priority
       Q.pop();
-      for(auto v : Adj[u])
+      for(auto tmp : Adj[u])
       {
-         if (Dist[v] > Dist[u] + 1)   // shorter path found?
+         int v = tmp.first;
+         unsigned int weight = tmp.second;
+         if (Dist[v] > Dist[u] + weight)
          {
-            Dist[v] = Dist[u] + 1;
+            Dist[v] = Dist[u] + weight;
             Q.push(make_pair(Dist[v], v)); // simply push, no update here
          }
       }
