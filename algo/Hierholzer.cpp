@@ -7,14 +7,13 @@
 #include <climits>
 #include <vector>
 #include <stack>
-#include <list>
 
 using namespace std;
 
 const int MAXN = 100;
 
 vector<int> Circuit;
-list<int> Adj[MAXN];
+vector<int> Adj[MAXN];
 
 void Hierholzer()
 {
@@ -30,9 +29,17 @@ void Hierholzer()
          // follow edges until stuck
          Stack.push(v);
          int tmp = *Adj[v].begin();
+         auto it_tmp = Adj[v].begin();
+         auto it_v = Adj[tmp].begin();
+         int index = 0;
          // remove edge, modifying graph
-         Adj[v].remove(tmp);
-         Adj[tmp].remove(v);
+         Adj[v].erase(it_tmp);
+         for(auto node : Adj[tmp])
+         {
+            if(node == v) it_v = Adj[tmp].begin()+index;
+            index++;
+         }
+         Adj[tmp].erase(it_v);
          v = tmp;
       }
       else
