@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <algorithm>
 #include <climits>
+#include <cmath>
 #include <vector>
 #include <map>
 #include <set>
@@ -23,7 +24,6 @@ struct subnetwork
 
 map<int, pair<int,unsigned int>> Sets;  // map to parent & rank
 vector<pair<int, pair<int,int>>> Edges;
-set<pair<int,int>> A;  // Final minimum spanning tree
 
 vector<pair<int,int>> Borduria;
 int T, n, q, best_global, best_local;
@@ -73,7 +73,6 @@ int main(void)
       //test des 2⁸ cas par force brute
       for(int i=0; i<maxT; i++)
       {
-         A.clear();
          Sets.clear();
          for(int u=0; u<n; u++) MakeSet(u); // Initialize Union-Find DS
          best_local = 0;
@@ -97,12 +96,14 @@ int main(void)
 
       //output
       printf("%d\n", best_global);
-      if(t<T-1) printf("\n");
-
-      //réinitialisation
-      for(int i=0; i< q; i++) subnetworks[i].cities.clear();
-      Edges.clear();
-      Borduria.clear();
+      if(t<T-1) 
+      {
+         printf("\n");
+         //réinitialisation
+         for(int i=0; i< q; i++) subnetworks[i].cities.clear();
+         Edges.clear();
+         Borduria.clear();
+      }
    }
    return 0;
 }
@@ -137,6 +138,10 @@ void Union(int x, int y)
    if(rankX == rankY) Sets[parentX].second++;;
 }
 
+/* 
+ * Alogorithme récupéré dans les slides de cours 
+ * et adapté pour les besoins du problème
+ */
 void Kruskal() 
 {
    for(auto tmp : Edges)
@@ -144,10 +149,8 @@ void Kruskal()
       auto edge = tmp.second;
       if(Find(edge.first) != Find(edge.second)) 
       {
-         Union(edge.first, edge.second);  // update Union-Find DS
-         A.insert(edge);                  // include edge in MST
-         //somme du poid de chaque arrète de l'arbre
-         best_local += tmp.first;
+         Union(edge.first, edge.second); // update Union-Find DS
+         best_local += tmp.first; //somme du poid de chaque arrète de l'arbre
       }
    }
 }

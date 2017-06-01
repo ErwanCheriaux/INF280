@@ -78,6 +78,10 @@ void BFS(int root)
    }
 }
 
+/* 
+ * Alogorithme récupéré dans les slides de cours 
+ * et adapté pour les besoins du problème
+ */
 bool Hierholzer(int root)
 {
    BFS(root);
