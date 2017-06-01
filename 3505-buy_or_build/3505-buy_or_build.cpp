@@ -17,7 +17,7 @@ const int N    = 1000;
 struct subnetwork
 {
    int nb_cities;
-   int cout;
+   int price;
    vector<int> cities;
 } subnetworks[MAXQ];
 
@@ -26,12 +26,13 @@ vector<pair<int, pair<int,int>>> Edges;
 set<pair<int,int>> A;  // Final minimum spanning tree
 
 vector<pair<int,int>> Borduria;
-int T, n, q;
+int T, n, q, best_global, best_local;
 
 void MakeSet(int x);
 int  Find(int x);
 void Union(int x, int y);
 int  weight(int x, int y);
+void Kruskal();
 
 int main(void)
 {
@@ -45,7 +46,7 @@ int main(void)
          int nb, c, city;
          scanf("%d %d ", &nb, &c);
          subnetworks[i].nb_cities = nb;
-         subnetworks[i].cout = c;
+         subnetworks[i].price = c;
          for(int j=0; j<nb; j++) 
          {
             scanf("%d", &city);
@@ -61,11 +62,47 @@ int main(void)
       }
 
       //calcule du poid des arrètes
-      for(int i=0; i<n; i++)
-         for(int j=0; j<n; j++)
-            if(i!=j)
-               Edges.push_back(make_pair(weight(i,j), make_pair(i,j)));
+      for(int i=0; i<n-1; i++)
+         for(int j=i+1; j<n; j++)
+            Edges.push_back(make_pair(weight(i,j), make_pair(i,j)));
 
+      best_global = INT_MAX;
+      int maxT = pow(2, q);
+      sort(Edges.begin(),  Edges.end()); // Sort edges by weight
+
+      //test des 2⁸ cas par force brute
+      for(int i=0; i<maxT; i++)
+      {
+         A.clear();
+         Sets.clear();
+         for(int u=0; u<n; u++) MakeSet(u); // Initialize Union-Find DS
+         best_local = 0;
+         //parcours des compagnies de télécommunication
+         for(int j=0; j<q; j++)
+         {
+            //vérif de la présence de la compagnies
+            if(1 & i << j)
+            {
+               //ajout des villes dans Union
+               for(int k=1; k<subnetworks[j].nb_cities; k++) 
+                  Union(subnetworks[j].cities[k-1],subnetworks[j].cities[k-1]);
+               best_local += subnetworks[j].price;
+            }
+         }
+         //apres ajout des compagnies
+         //on cherche un arbre couvrant de poid min
+         Kruskal();
+         best_global = min(best_global, best_local);
+      }
+
+      //output
+      printf("%d\n", best_global);
+      if(t<T-1) printf("\n");
+
+      //réinitialisation
+      for(int i=0; i< q; i++) subnetworks[i].cities.clear();
+      Edges.clear();
+      Borduria.clear();
    }
    return 0;
 }
@@ -102,9 +139,6 @@ void Union(int x, int y)
 
 void Kruskal() 
 {
-   for(int u=0; u < N; u++) MakeSet(u);   // Initialize Union-Find DS
-   sort(Edges.begin(), Edges.end());      // Sort edges by weight
-
    for(auto tmp : Edges)
    {
       auto edge = tmp.second;
@@ -112,6 +146,8 @@ void Kruskal()
       {
          Union(edge.first, edge.second);  // update Union-Find DS
          A.insert(edge);                  // include edge in MST
+         //somme du poid de chaque arrète de l'arbre
+         best_local += tmp.first;
       }
    }
 }
