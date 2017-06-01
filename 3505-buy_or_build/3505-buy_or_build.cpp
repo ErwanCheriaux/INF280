@@ -50,7 +50,7 @@ int main(void)
          for(int j=0; j<nb; j++) 
          {
             scanf("%d", &city);
-            subnetworks[i].cities.push_back(city);
+            subnetworks[i].cities.push_back(city-1);
          }
       }
       //cities
@@ -81,11 +81,11 @@ int main(void)
          for(int j=0; j<q; j++)
          {
             //vérif de la présence de la compagnies
-            if(1 & i << j)
+            if(1 & i >> j)
             {
                //ajout des villes dans Union
                for(int k=1; k<subnetworks[j].nb_cities; k++) 
-                  Union(subnetworks[j].cities[k-1],subnetworks[j].cities[k-1]);
+                  Union(subnetworks[j].cities[k-1],subnetworks[j].cities[k]);
                best_local += subnetworks[j].price;
             }
          }
