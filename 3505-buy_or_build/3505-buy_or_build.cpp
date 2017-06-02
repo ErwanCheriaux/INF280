@@ -134,8 +134,8 @@ void Union(int x, int y)
 
    if(parentX == parentY) return;
    else if(rankX < rankY) Sets[parentX].first = parentY;
-   else Sets[parentY].first = parentX;
-   if(rankX == rankY) Sets[parentX].second++;;
+   else                   Sets[parentY].first = parentX;
+   if(rankX == rankY)     Sets[parentX].second++;
 }
 
 /* 
