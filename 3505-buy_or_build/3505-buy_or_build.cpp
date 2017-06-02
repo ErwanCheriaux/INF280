@@ -123,19 +123,21 @@ void MakeSet(int x)
 
 int Find(int x) 
 {
-   if(Sets[x].first == x) return x;                  // Parent == x ?
-   else return Sets[x].first = Find(Sets[x].first);  // Get Parent
+   auto &tmp = Sets[x];
+   if(tmp.first == x) return x;                  // Parent == x ?
+   else return tmp.first = Find(tmp.first);  // Get Parent
 }
 
 void Union(int x, int y)
 {
    int parentX = Find(x), parentY = Find(y);
-   int rankX = Sets[parentX].second, rankY = Sets[parentY].second;
-
    if(parentX == parentY) return;
-   else if(rankX < rankY) Sets[parentX].first = parentY;
-   else                   Sets[parentY].first = parentX;
-   if(rankX == rankY)     Sets[parentX].second++;
+
+   auto &tmpX = Sets[parentX], &tmpY = Sets[parentY];
+   int rankX = tmpX.second, rankY = tmpY.second;
+   if(rankX < rankY)  tmpX.first = parentY;
+   else               tmpY.first = parentX;
+   if(rankX == rankY) tmpX.second++;
 }
 
 /* 
