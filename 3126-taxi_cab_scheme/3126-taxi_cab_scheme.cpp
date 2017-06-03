@@ -26,10 +26,10 @@ struct
 } Taxis[MAXM];
 
 int dist(int x, int y);
-bool BFS(int G[MAXN][MAXN], int s, int t, int Predecessor[MAXN]);
-int FordFulkerson(int G[MAXN][MAXN], int s, int t);
+bool BFS(int s, int t, int Predecessor[MAXN]);
+int FordFulkerson(int s, int t);
 
-int N, M;
+int N, M, G[MAXN][MAXN];
 
 int main(void)
 {
@@ -63,19 +63,24 @@ int main(void)
       }
 
       //completion du graphe bipartie G
-      int G[MAXN][MAXN];
       fill_n((int *)G, MAXN * MAXN, 0);
 
       for(int i=0; i<M; i++)
       {
-         G[2*M][i]     = 1;
-         G[i+M][2*M+1] = 1;
+         int edge_exist = false;
          for(int j=i+1; j<M; j++)
+         {
             if(Taxis[i].destination_time + dist(i,j) < Taxis[j].start_time)
+            {
                G[i][M+j] = 1;
+               edge_exist = true;
+            }
+         }
+         if(edge_exist) G[2*M][i] = 1;
+         G[i+M][2*M+1] = 1;
       }
 
-      printf("%d\n", M-FordFulkerson(G,2*M,2*M+1));
+      printf("%d\n", M-FordFulkerson(2*M,2*M+1));
    }
 
    return 0;
@@ -87,7 +92,7 @@ int dist(int x, int y)
           abs(Taxis[x].destination_y - Taxis[y].start_y);
 }
 
-bool BFS(int G[MAXN][MAXN], int s, int t, int Predecessor[MAXN])
+bool BFS(int s, int t, int Predecessor[MAXN])
 {
    // Create a visited array and mark all vertices as not visited
    bool visited[MAXN];
@@ -106,7 +111,7 @@ bool BFS(int G[MAXN][MAXN], int s, int t, int Predecessor[MAXN])
       int u = q.front();
       q.pop();
  
-      for (int v=0; v<MAXN; v++)
+      for(int v=0; v < 2*M+2; v++)
       {
          if (visited[v]==false && G[u][v] > 0)
          {
@@ -122,26 +127,22 @@ bool BFS(int G[MAXN][MAXN], int s, int t, int Predecessor[MAXN])
    return (visited[t] == true);
 }
 
-int FordFulkerson(int G[MAXN][MAXN], int s, int t)
+int FordFulkerson(int s, int t)
 {
-   int GRes[MAXN][MAXN];
-   // residual graph
-   copy_n((int *)G, MAXN * MAXN, (int *)GRes);
-   // copy original graph
    int Predecessor[MAXN];
    int Maxflow = 0;
-   while(BFS(GRes, s, t, Predecessor))
+
+   while(BFS(s, t, Predecessor)) // find residual path
    {
-      // find residual path
-      int Bottleneck = MAXFLOW;
       // get minimal flow of residual path
+      int Bottleneck = MAXFLOW;
       for(int v = t, u = Predecessor[t]; v != s; v = u, u = Predecessor[u])
-         Bottleneck = min(Bottleneck, GRes[u][v]);
+         Bottleneck = min(Bottleneck, G[u][v]);
       for(int v = t, u = Predecessor[t]; v != s; v = u, u = Predecessor[u])
       {
-         GRes[u][v] -= Bottleneck;
          // decrease capacity along residual path
-         GRes[v][u] += Bottleneck;
+         G[u][v] -= Bottleneck;
+         G[v][u] += Bottleneck;
       }
       Maxflow += Bottleneck;
    }
