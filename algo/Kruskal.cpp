@@ -6,50 +6,43 @@
 #include <algorithm>
 #include <climits>
 #include <vector>
-#include <utility>
-#include <map>
 #include <set>
 
 using namespace std;
 
 int N = 100;
 
-map<int, pair<int,unsigned int>> Sets;  // map to parent & rank
-vector<pair<int, pair<int,int>>> Edges;
+vector<int> Sets;
 set<pair<int,int>> A;  // Final minimum spanning tree
+vector<pair<int, pair<int,int>>> Edges;
 
 
-void MakeSet(int x)
+void MakeSet()
 { 
-   Sets.insert(make_pair(x, make_pair(x, 0)));
-}
-
-int Find(int x) 
-{
-   if(Sets[x].first == x) return x;                  // Parent == x ?
-   else return Sets[x].first = Find(Sets[x].first);  // Get Parent
+   for(int i=0; i<N; i++) Sets.push_back(i);
 }
 
 void Union(int x, int y)
 {
-   int parentX = Find(x), parentY = Find(y);
-   int rankX = Sets[parentX].second, rankY = Sets[parentY].second;
+   int ensembleX = Sets[x];
+   int ensembleY = Sets[y];
 
-   if(parentX == parentY) return;
-   else if(rankX < rankY) Sets[parentX].first = parentY;
-   else Sets[parentY].first = parentX;
-   if(rankX == rankY) Sets[parentX].second++;;
+   if(ensembleX == ensembleY) return;
+
+   for(auto &tmp : Sets)
+      if(tmp == ensembleY)
+         tmp = ensembleX;
 }
 
 void Kruskal() 
 {
-   for(int u=0; u < N; u++) MakeSet(u);   // Initialize Union-Find DS
+   MakeSet();   // Initialize Union-Find DS
    sort(Edges.begin(), Edges.end());      // Sort edges by weight
 
    for(auto tmp : Edges)
    {
       auto edge = tmp.second;
-      if(Find(edge.first) != Find(edge.second)) 
+      if(Sets[edge.first] != Sets[edge.second]) 
       {
          Union(edge.first, edge.second);  // update Union-Find DS
          A.insert(edge);                  // include edge in MST
