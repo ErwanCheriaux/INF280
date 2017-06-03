@@ -8,7 +8,6 @@
 #include <cmath>
 #include <vector>
 #include <map>
-#include <set>
 
 using namespace std;
 
@@ -22,13 +21,13 @@ struct subnetwork
    vector<int> cities;
 } subnetworks[MAXQ];
 
+map<int, pair<int,unsigned int>> Sets_ref;
 map<int, pair<int,unsigned int>> Sets;  // map to parent & rank
 vector<pair<int, pair<int,int>>> Edges;
 
 vector<pair<int,int>> Borduria;
 int T, n, q, best_global, best_local;
 
-void MakeSet(int x);
 int  Find(int x);
 void Union(int x, int y);
 int  weight(int x, int y);
@@ -59,12 +58,15 @@ int main(void)
          int x, y;
          scanf("%d %d\n", &x, &y);
          Borduria.push_back(make_pair(x, y));
+         Sets_ref.insert(make_pair(i, make_pair(i, 0)));
       }
 
       //calcule du poid des arrètes
       for(int i=0; i<n-1; i++)
+      {
          for(int j=i+1; j<n; j++)
             Edges.push_back(make_pair(weight(i,j), make_pair(i,j)));
+      }
 
       best_global = INT_MAX;
       int maxT = pow(2, q);
@@ -73,8 +75,8 @@ int main(void)
       //test des 2⁸ cas par force brute
       for(int i=0; i<maxT; i++)
       {
-         Sets.clear();
-         for(int u=0; u<n; u++) MakeSet(u); // Initialize Union-Find DS
+         //initialisation
+         Sets = Sets_ref;
          best_local = 0;
          //parcours des compagnies de télécommunication
          for(int j=0; j<q; j++)
@@ -114,11 +116,6 @@ int weight(int x, int y)
           (Borduria[x].first - Borduria[y].first)   + \
           (Borduria[x].second - Borduria[y].second) * \
           (Borduria[x].second - Borduria[y].second);
-}
-
-void MakeSet(int x)
-{ 
-   Sets.insert(make_pair(x, make_pair(x, 0)));
 }
 
 int Find(int x) 
