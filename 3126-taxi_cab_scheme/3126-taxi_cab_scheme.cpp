@@ -26,8 +26,8 @@ struct
 } Taxis[MAXM];
 
 int dist(int x, int y);
-bool BFS(int s, int t, int Predecessor[MAXN]);
-int FordFulkerson(int s, int t);
+bool BFS(int s, int t, int *Predecessor, int size);
+int FordFulkerson(int s, int t, int size);
 
 int N, M, G[MAXN][MAXN];
 
@@ -63,8 +63,6 @@ int main(void)
       }
 
       //completion du graphe bipartie G
-      fill_n((int *)G, MAXN * MAXN, 0);
-
       for(int i=0; i<M; i++)
       {
          int edge_exist = false;
@@ -75,12 +73,14 @@ int main(void)
                G[i][M+j] = 1;
                edge_exist = true;
             }
+            else G[i][M+j] = 0;
          }
          if(edge_exist) G[2*M][i] = 1;
+         else           G[2*M][i] = 0;
          G[i+M][2*M+1] = 1;
       }
 
-      printf("%d\n", M-FordFulkerson(2*M,2*M+1));
+      printf("%d\n", M-FordFulkerson(2*M,2*M+1,2*M+2));
    }
 
    return 0;
@@ -92,10 +92,10 @@ int dist(int x, int y)
           abs(Taxis[x].destination_y - Taxis[y].start_y);
 }
 
-bool BFS(int s, int t, int Predecessor[MAXN])
+bool BFS(int s, int t, int *Predecessor, int size)
 {
    // Create a visited array and mark all vertices as not visited
-   bool visited[MAXN];
+   bool visited[size];
    memset(visited, 0, sizeof(visited));
  
    // Create a queue, enqueue source vertex and mark source vertex
@@ -111,7 +111,7 @@ bool BFS(int s, int t, int Predecessor[MAXN])
       int u = q.front();
       q.pop();
  
-      for(int v=0; v < 2*M+2; v++)
+      for(int v=0; v < size; v++)
       {
          if (visited[v]==false && G[u][v] > 0)
          {
@@ -127,12 +127,12 @@ bool BFS(int s, int t, int Predecessor[MAXN])
    return (visited[t] == true);
 }
 
-int FordFulkerson(int s, int t)
+int FordFulkerson(int s, int t, int size)
 {
-   int Predecessor[MAXN];
+   int Predecessor[size];
    int Maxflow = 0;
 
-   while(BFS(s, t, Predecessor)) // find residual path
+   while(BFS(s, t, Predecessor, size)) // find residual path
    {
       // get minimal flow of residual path
       int Bottleneck = MAXFLOW;
