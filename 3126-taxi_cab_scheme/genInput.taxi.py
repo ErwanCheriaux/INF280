@@ -2,14 +2,15 @@ from random import randint
 
 f = open("taxi.input","w")
 
-N = 1
+N = 1000
+f.write(str(N) + "\n")
+
 heure = []
 minute = []
 
 for i in range(N):
-   M = 499
+   M = randint(1, 499)
 
-   f.write(str(N) + "\n")
    f.write(str(M) + "\n")
 
    for j in range(M):
