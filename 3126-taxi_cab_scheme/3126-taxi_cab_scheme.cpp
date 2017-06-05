@@ -68,13 +68,18 @@ int main(void)
 
       for(int i=0; i<M; i++)
       {
-         G[2*M][i]     = 1;
-         G[i+M][2*M+1] = 1;
+         int edge_exist = false;
          for(int j=i+1; j<M; j++)
+         {
             if(Taxis[i].destination_time + dist(i,j) < Taxis[j].start_time)
+            {
                G[i][M+j] = 1;
+               edge_exist = true;
+            }
+         }
+         if(edge_exist) G[2*M][i] = 1;
+         G[i+M][2*M+1] = 1;
       }
-
       printf("%d\n", M-FordFulkerson(G,2*M,2*M+1));
    }
 
