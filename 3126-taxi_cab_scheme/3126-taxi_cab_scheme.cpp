@@ -63,21 +63,15 @@ int main(void)
       }
 
       //completion du graphe bipartie G
+      fill_n((int *)G, MAXN * MAXN, 0);
+
       for(int i=0; i<M; i++)
       {
-         int edge_exist = false;
-         for(int j=i+1; j<M; j++)
-         {
-            if(Taxis[i].destination_time + dist(i,j) < Taxis[j].start_time)
-            {
-               G[i][M+j] = 1;
-               edge_exist = true;
-            }
-            else G[i][M+j] = 0;
-         }
-         if(edge_exist) G[2*M][i] = 1;
-         else           G[2*M][i] = 0;
+         G[2*M][i] = 1;
          G[i+M][2*M+1] = 1;
+         for(int j=i+1; j<M; j++)
+            if(Taxis[i].destination_time + dist(i,j) < Taxis[j].start_time)
+               G[i][M+j] = 1;
       }
 
       printf("%d\n", M-FordFulkerson(2*M,2*M+1,2*M+2));
