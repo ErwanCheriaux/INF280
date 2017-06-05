@@ -86,6 +86,10 @@ int dist(int x, int y)
           abs(Taxis[x].destination_y - Taxis[y].start_y);
 }
 
+/* 
+ * Alogorithme récupéré sur le site www.geeksforgeeks.org 
+ * et adapté pour les besoins du problème
+ */
 bool BFS(int s, int t, int *Predecessor, int size)
 {
    // Create a visited array and mark all vertices as not visited
@@ -121,6 +125,10 @@ bool BFS(int s, int t, int *Predecessor, int size)
    return (visited[t] == true);
 }
 
+/* 
+ * Alogorithme récupéré dans les slides de cours 
+ * et adapté pour les besoins du problème
+ */
 int FordFulkerson(int s, int t, int size)
 {
    int Predecessor[size];
