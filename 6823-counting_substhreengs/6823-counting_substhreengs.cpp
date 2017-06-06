@@ -13,5 +13,13 @@ using namespace std;
 
 int main(void)
 {
-   return 0;
+   while(1)
+   {
+      string str;
+      getline(cin, str);
+
+      if(str == "\0") return 0;
+
+      cout << str << endl;
+   }
 }
