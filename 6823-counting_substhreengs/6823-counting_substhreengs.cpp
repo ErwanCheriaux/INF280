@@ -33,7 +33,7 @@ int main(void)
             S[cpt_number] = c-48;
             for(int i=cpt_number; i >= 0; i--)
             {
-               sum += S[i] % 3;
+               sum = (sum + S[i]) % 3;
                if(!sum) cpt_multiple++;
             }
             cpt_number++;
