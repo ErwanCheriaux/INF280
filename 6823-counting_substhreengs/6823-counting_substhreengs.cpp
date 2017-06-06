@@ -26,12 +26,13 @@ int main(void)
          {
             int sum = 0;
             S.push_back(c-48);
-            for (iterator<char> it = S.end()-1; it != S.begin()-1; --it)
+            for(int i=S.size()-1; i>=0; i--)
             {
-               sum = (sum + *it) % 3;
+               sum = (sum + S[i]) % 3;
                if(!sum) cpt_multiple++;
             }
          }
+         else S.clear();
       }
 
       printf("%d\n", cpt_multiple);
