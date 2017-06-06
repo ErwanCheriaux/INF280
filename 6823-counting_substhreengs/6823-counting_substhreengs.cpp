@@ -11,6 +11,8 @@
 
 using namespace std;
 
+char S[1000000];
+
 int main(void)
 {
    while(1)
@@ -20,6 +22,25 @@ int main(void)
 
       if(str == "\0") return 0;
 
-      cout << str << endl;
+      int cpt_number = 0;
+      int cpt_multiple=0;
+
+      for(auto c : str)
+      {
+         if(c > 47 && c < 58) 
+         {
+            int sum = 0;
+            S[cpt_number] = c-48;
+            for(int i=cpt_number; i >= 0; i--)
+            {
+               sum += S[i] % 3;
+               if(!sum) cpt_multiple++;
+            }
+            cpt_number++;
+         }
+         else  cpt_number = 0;
+      }
+
+      printf("%d\n", cpt_multiple);
    }
 }
