@@ -4,14 +4,9 @@
 #include <iostream>
 #include <cstdint>
 #include <algorithm>
-#include <climits>
-#include <queue>
 #include <vector>
-#include <list>
 
 using namespace std;
-
-char S[1000000];
 
 int main(void)
 {
@@ -22,7 +17,7 @@ int main(void)
 
       if(str == "\0") return 0;
 
-      int cpt_number = 0;
+      vector<char> S;
       int cpt_multiple=0;
 
       for(auto c : str)
@@ -30,15 +25,13 @@ int main(void)
          if(c > 47 && c < 58) 
          {
             int sum = 0;
-            S[cpt_number] = c-48;
-            for(int i=cpt_number; i >= 0; i--)
+            S.push_back(c-48);
+            for (iterator<char> it = S.end()-1; it != S.begin()-1; --it)
             {
-               sum = (sum + S[i]) % 3;
+               sum = (sum + *it) % 3;
                if(!sum) cpt_multiple++;
             }
-            cpt_number++;
          }
-         else  cpt_number = 0;
       }
 
       printf("%d\n", cpt_multiple);
