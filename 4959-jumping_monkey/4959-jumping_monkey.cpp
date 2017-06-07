@@ -36,8 +36,11 @@ int main(void)
          Adj[y].push_back(x);
       }
 
-      if(circuit()) printf("OUI\n");
-      else          printf("NON\n");
+      if(circuit()) printf("Impossible\n");
+      else
+      {
+         
+      }
 
       //réinitialisation
       for(int i=0; i<N; i++)
