@@ -8,7 +8,7 @@
 
 using namespace std;
 
-deque<int> S;
+deque<unsigned long long> S;
 
 void shift(int sens);
 
@@ -22,7 +22,7 @@ int main(void)
       if(str == "\0") return 0;
 
       S.clear();
-      int result = 0;
+      unsigned long long result = 0;
       for(int i=0; i<3; i++) S.push_back(0);
 
       for(auto c : str)
@@ -44,7 +44,7 @@ int main(void)
             for(int i=0; i<3; i++) S.push_back(0);
          }
       }
-      printf("%d\n", result);
+      printf("%lld\n", result);
    }
 }
 
