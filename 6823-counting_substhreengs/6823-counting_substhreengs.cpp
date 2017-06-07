@@ -53,13 +53,13 @@ void shift(int sens)
    //multiple de 3 +1
    if(sens == 1)
    {
-      S.push_back(S.front());
-      S.pop_front();
+      S.push_front(S.back());
+      S.pop_back();
    }
    //multiple de 3 -1
    else if(sens == 2)
    {
-      S.push_front(S.back());
-      S.pop_back();
+      S.push_back(S.front());
+      S.pop_front();
    }
 }
