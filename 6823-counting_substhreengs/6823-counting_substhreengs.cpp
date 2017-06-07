@@ -4,9 +4,13 @@
 #include <iostream>
 #include <cstdint>
 #include <algorithm>
-#include <vector>
+#include <deque>
 
 using namespace std;
+
+deque<int> S;
+
+void shift(int sens);
 
 int main(void)
 {
@@ -17,24 +21,45 @@ int main(void)
 
       if(str == "\0") return 0;
 
-      vector<char> S;
-      int cpt_multiple=0;
+      S.clear();
+      int result = 0;
+      for(int i=0; i<3; i++) S.push_back(0);
 
       for(auto c : str)
       {
-         if(c > 47 && c < 58) 
+         //s'il sagit d'un chiffre
+         if(c >= '0' && c <= '9') 
          {
-            int sum = 0;
-            S.push_back(c-48);
-            for(int i=S.size()-1; i>=0; i--)
-            {
-               sum = (sum + S[i]) % 3;
-               if(!sum) cpt_multiple++;
-            }
+            int chiffre = (c-'0')%3;
+            //on décale en fonction du chiffre
+            shift(chiffre);
+            result = result + S.front();
+            //si le chiffre est multiple de 3
+            if(!chiffre) result++;
+            S[chiffre]++;
          }
-         else S.clear();
+         else
+         {
+            S.clear();
+            for(int i=0; i<3; i++) S.push_back(0);
+         }
       }
+      printf("%d\n", result);
+   }
+}
 
-      printf("%d\n", cpt_multiple);
+void shift(int sens)
+{
+   //multiple de 3 +1
+   if(sens == 1)
+   {
+      S.push_back(S.front());
+      S.pop_front();
+   }
+   //multiple de 3 -1
+   else if(sens == 2)
+   {
+      S.push_front(S.back());
+      S.pop_back();
    }
 }
