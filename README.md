@@ -31,5 +31,5 @@ Pour uDebug:
 - [ ] 3126 Taxi Cab Scheme
 
 - [ ] 4959 Jumping monkey
-- [ ] 6823 Counting subthreengs
+- [X] 6823 Counting subthreengs
 - [ ] 6893 The Big Painting
