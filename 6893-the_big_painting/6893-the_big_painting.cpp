@@ -22,7 +22,7 @@ void makeTable()
 {
    T[0] = -1;
    int cnd = 0;
-   for (int i = 1; i < wp; i++)
+   for (int i = 1; i <= wp; i++)
    {
       T[i] = cnd;
       while (cnd >= 0 && motif[cnd][0] != motif[i][0])
@@ -34,7 +34,7 @@ void makeTable()
 void KnuthMorrisPratt()
 {
    int cnd = 0;                          // position courante dans le motif
-   for (int i = 0; i < (hm*(wm+1)); i++)
+   for (int i = 0; i <= (hm*(wm+1)); i++)
    {
       char tableau;
       scanf("%c", &tableau);
@@ -52,8 +52,9 @@ void KnuthMorrisPratt()
 
 int main(void)
 {
-   while(scanf("%d %d %d %d\n", &hp, &wp, &hm, &wm) == 1)
+   while(scanf("%d", &hp)==1)
    {
+      scanf(" %d %d %d\n", &wp, &hm, &wm);
       //lecture motif
       for(int i=0; i<hp; i++){
          for(int j=0; j<wp; j++)
