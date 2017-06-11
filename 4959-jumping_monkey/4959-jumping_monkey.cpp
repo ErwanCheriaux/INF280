@@ -118,8 +118,11 @@ vector<int> shoot()
          //si la position du singe n'a jamais été éudié
          if(!past[singePostion])
          {
-
+            Q.push_back(singePostion);
+            past[singePostion] = singe; //permet d'avoir un historique
+            fire[singePostion] = i;     //permet l'arbre shooté
          }
       }
+      Q.pop();
    }
 }
