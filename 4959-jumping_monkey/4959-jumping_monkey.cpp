@@ -4,7 +4,6 @@
 #include <iostream>
 #include <cstdint>
 #include <algorithm>
-#include <climits>
 #include <queue>
 #include <vector>
 
@@ -13,9 +12,9 @@ using namespace std;
 const int MAXN = 21;
 
 vector<int> Adj[MAXN];
-int Visited[MAXN];
-int fire[1<<MAXN];
-int past[1<<MAXN];
+int  Visited[MAXN];
+long fire[1<<MAXN];
+int  past[1<<MAXN];
 
 int N, M;
 
@@ -90,12 +89,12 @@ bool circuit()
 
 vector<int> shoot()
 {
-   queue<int> Q;
+   queue<long> Q;
    Q.push((1<<N)-1); //le singe peut être sur n'importe quel arbre
 
    while(!Q.empty())
    {
-      int singe = Q.front();
+      long singe = Q.front();
       if(!singe) //le singe ne peut plus se cacher
       {
          vector<int> path;
@@ -111,8 +110,8 @@ vector<int> shoot()
       for(int i=0; i<N; i++)
       {
          //on retire l'arbre visé
-         int singeAfterShoot = singe & ~(1<<i);
-         int singePostion = 0;
+         long singeAfterShoot = singe & ~(1<<i);
+         long singePostion = 0;
 
          //on regarde où le singe peut aller
          for(int j=0; j<N; j++)
