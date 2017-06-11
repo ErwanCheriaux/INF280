@@ -12,13 +12,11 @@ using namespace std;
 const int MAXN = 21;
 
 vector<int> Adj[MAXN];
-int  Visited[MAXN];
-long fire[1<<MAXN];
-int  past[1<<MAXN];
+int fire[1<<MAXN];
+int past[1<<MAXN];
 
 int N, M;
 
-bool circuit();
 vector<int> shoot();
 
 int main(void)
@@ -37,11 +35,12 @@ int main(void)
          Adj[y].push_back(x);
       }
 
-      if(circuit()) printf("Impossible\n");
+      vector<int> shootedPath;
+      shootedPath = shoot();
+
+      if(shootedPath.empty()) printf("Impossible\n");
       else
       {
-         vector<int> shootedPath;
-         shootedPath = shoot();
          cout << shootedPath.size() << ":";
          for(auto s : shootedPath) printf(" %d", s);
          printf("\n");
@@ -49,55 +48,21 @@ int main(void)
 
       //réinitialisation
       for(int i=0; i<(1<<N); i++) past[i] = 0;
-      for(int i=0; i<N; i++)
-      {
-         Adj[i].clear();
-         Visited[i] = 0;
-      }
+      for(int i=0; i<N; i++) Adj[i].clear();
    }
-}
-
-/* Valeur de retour
- * true  : il y a un circuit dans le graphe
- * false : il n'y a pas de circuit dans le graphe
- */
-bool circuit()
-{
-   /* 0 : non visité
-    * 1 : sur la pile
-    * 2 : visité et donc plus sur la pile
-    */
-   queue<int> Q;
-   Q.push(0);
-   while(!Q.empty())
-   {
-      int u = Q.front();
-      Q.pop();
-      Visited[u] = 2;
-      for(auto v : Adj[u])
-      {
-         if(Visited[v] == 1) return true;
-         else if(!Visited[v])
-         {
-            Visited[v] = 1;
-            Q.push(v);
-         }
-      }
-   }
-   return false;
 }
 
 vector<int> shoot()
 {
-   queue<long> Q;
+   vector<int> path;
+   queue<int> Q;
    Q.push((1<<N)-1); //le singe peut être sur n'importe quel arbre
 
    while(!Q.empty())
    {
-      long singe = Q.front();
+      int singe = Q.front();
       if(!singe) //le singe ne peut plus se cacher
       {
-         vector<int> path;
          while(singe != (1<<N)-1)
          {
             path.push_back(fire[singe]);
@@ -110,8 +75,8 @@ vector<int> shoot()
       for(int i=0; i<N; i++)
       {
          //on retire l'arbre visé
-         long singeAfterShoot = singe & ~(1<<i);
-         long singePostion = 0;
+         int singeAfterShoot = singe & ~(1<<i);
+         int singePostion = 0;
 
          //on regarde où le singe peut aller
          for(int j=0; j<N; j++)
@@ -129,4 +94,5 @@ vector<int> shoot()
       }
       Q.pop();
    }
+   return path;
 }
