@@ -7,7 +7,6 @@
 #include <climits>
 #include <queue>
 #include <vector>
-#include <list>
 
 using namespace std;
 
@@ -44,7 +43,7 @@ int main(void)
       {
          vector<int> shootedPath;
          shootedPath = shoot();
-         printf("%d:", shootedPath.size());
+         cout << shootedPath.size() << ":";
          for(auto s : shootedPath) printf(" %d", s);
          printf("\n");
       }
@@ -99,7 +98,13 @@ vector<int> shoot()
       int singe = Q.front();
       if(!singe) //le singe ne peut plus se cacher
       {
-         
+         vector<int> path;
+         while(singe =! (1<<N)-1)
+         {
+            path.push_back(fire[singe]);
+            singe = past[singe];
+         }
+         return path;
       }
 
       //on tire sur tous les arbres
@@ -118,7 +123,7 @@ vector<int> shoot()
          //si la position du singe n'a jamais été éudié
          if(!past[singePostion])
          {
-            Q.push_back(singePostion);
+            Q.push(singePostion);
             past[singePostion] = singe; //permet d'avoir un historique
             fire[singePostion] = i;     //permet l'arbre shooté
          }
