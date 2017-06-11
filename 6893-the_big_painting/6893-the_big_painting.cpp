@@ -23,7 +23,7 @@ void makeTable()
    for(int i = 1; i <= wp; i++)
    {
       T[i] = cnd;
-      while(cnd >= 0 && motif[cnd][0] != motif[i][0])
+      while(cnd >= 0 && motif[0][cnd] != motif[0][i])
          cnd = T[cnd];
       cnd++;
    }
@@ -32,7 +32,7 @@ void makeTable()
 void KnuthMorrisPratt()
 {
    int cnd = 0;                          // position courante dans le motif
-   for(int i = 0; i <= (hm*(wm+1)); i++)
+   for(int i = 0; i < (hm*(wm+1)); i++)
    {
       char tableau;
       scanf("%c", &tableau);
@@ -43,7 +43,7 @@ void KnuthMorrisPratt()
       {
          // on recule dans p au cas où le prochain match chevauche
          cnd = T[cnd];
-         memorie.push_back(make_pair(i-hp+1, 1));
+         memorie.push_back(make_pair(i-wp+1, 1));
       }
 
       int cptErase = 0;
