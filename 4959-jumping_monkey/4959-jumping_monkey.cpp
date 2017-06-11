@@ -99,7 +99,7 @@ vector<int> shoot()
       if(!singe) //le singe ne peut plus se cacher
       {
          vector<int> path;
-         while(singe =! (1<<N)-1)
+         while(singe != (1<<N)-1)
          {
             path.push_back(fire[singe]);
             singe = past[singe];
@@ -116,8 +116,8 @@ vector<int> shoot()
 
          //on regarde où le singe peut aller
          for(int j=0; j<N; j++)
-            if((singeAfterShoot >> i) & 1)
-               for(auto arbre : Adj[i])
+            if((singeAfterShoot >> j) & 1)
+               for(auto arbre : Adj[j])
                   singePostion = singePostion | 1<<arbre;
 
          //si la position du singe n'a jamais été éudié
