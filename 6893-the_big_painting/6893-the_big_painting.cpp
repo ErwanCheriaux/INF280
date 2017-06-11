@@ -39,7 +39,7 @@ void KnuthMorrisPratt()
       while(cnd >= 0 && motif[cnd][0] != tableau) // tant qu'on ne lit pas le prochain char du motif
          cnd = T[cnd];                            // on recule dans le motif
       cnd++;        // maintenant que le prochain char convient, avancer
-      if(cnd == hp) // on a atteint la fin de p, donc on a trouvé un match
+      if(cnd == wp) // on a atteint la fin de p, donc on a trouvé un match
       {
          // on recule dans p au cas où le prochain match chevauche
          cnd = T[cnd];

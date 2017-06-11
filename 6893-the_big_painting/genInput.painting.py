@@ -5,8 +5,8 @@ f = open("painting.input","w")
 hp = 2
 wp = 4
 
-hm = 30
-wm = 20
+hm = 6
+wm = 6
 
 f.write(str(hp) + " " + str(wp) + " " + str(hm) + " " + str(wm) + "\n")
 
