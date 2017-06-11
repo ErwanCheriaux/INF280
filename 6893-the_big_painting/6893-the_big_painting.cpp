@@ -42,9 +42,8 @@ void KnuthMorrisPratt()
       if(cnd == hp) // on a atteint la fin de p, donc on a trouvé un match
       {
          // on recule dans p au cas où le prochain match chevauche
-         printf("match at %d\n", i - hp + 1);
-         memorie.push_back(make_pair(i-hp+1, 1));
          cnd = T[cnd];
+         memorie.push_back(make_pair(i-hp+1, 1));
       }
 
       int cptErase = 0;
@@ -86,7 +85,7 @@ int main(void)
 
       //lecture tableau
       KnuthMorrisPratt();
-      printf("nb of match is %d\n", match);
+      printf("%d\n", match);
 
       //réinitialisation
       match = 0;
