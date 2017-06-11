@@ -36,7 +36,7 @@ void KnuthMorrisPratt()
    {
       char tableau;
       scanf("%c", &tableau);
-      while(cnd >= 0 && motif[cnd][0] != tableau) // tant qu'on ne lit pas le prochain char du motif
+      while(cnd >= 0 && motif[0][cnd] != tableau) // tant qu'on ne lit pas le prochain char du motif
          cnd = T[cnd];                            // on recule dans le motif
       cnd++;        // maintenant que le prochain char convient, avancer
       if(cnd == wp) // on a atteint la fin de p, donc on a trouvé un match
