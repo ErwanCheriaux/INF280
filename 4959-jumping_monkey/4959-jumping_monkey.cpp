@@ -12,8 +12,8 @@ using namespace std;
 const int MAXN = 21;
 
 vector<int> Adj[MAXN];
-int fire[1<<MAXN];
-int past[1<<MAXN];
+long past[1<<MAXN];
+int  fire[1<<MAXN];
 
 int N, M;
 
@@ -55,12 +55,12 @@ int main(void)
 vector<int> shoot()
 {
    vector<int> path;
-   queue<int> Q;
+   queue<long> Q;
    Q.push((1<<N)-1); //le singe peut être sur n'importe quel arbre
 
    while(!Q.empty())
    {
-      int singe = Q.front();
+      long singe = Q.front();
       if(!singe) //le singe ne peut plus se cacher
       {
          while(singe != (1<<N)-1)
@@ -75,8 +75,8 @@ vector<int> shoot()
       for(int i=0; i<N; i++)
       {
          //on retire l'arbre visé
-         int singeAfterShoot = singe & ~(1<<i);
-         int singePostion = 0;
+         long singeAfterShoot = singe & ~(1<<i);
+         long singePostion = 0;
 
          //on regarde où le singe peut aller
          for(int j=0; j<N; j++)
