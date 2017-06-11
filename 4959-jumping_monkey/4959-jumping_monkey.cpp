@@ -19,6 +19,7 @@ vector<int> Adj[MAXN];
 int N, M;
 
 bool circuit();
+vector<int> shoot();
 
 int main(void)
 {
@@ -39,7 +40,11 @@ int main(void)
       if(circuit()) printf("Impossible\n");
       else
       {
-         
+         vector<int> shootedPath;
+         shootedPath = shoot();
+         printf("%d:", shootedPath.size());
+         for(auto s : shootedPath) printf(" %d", s);
+         printf("\n");
       }
 
       //réinitialisation
@@ -79,4 +84,9 @@ bool circuit()
       }
    }
    return false;
+}
+
+vector<int> shoot()
+{
+
 }
