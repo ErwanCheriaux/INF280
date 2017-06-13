@@ -33,3 +33,7 @@ Pour uDebug:
 - [ ] 4959 Jumping monkey
 - [X] 6823 Counting subthreengs
 - [ ] 6893 The Big Painting
+
+- [ ] 5827 Regular Convex Polygon
+- [ ] 5138 Trash Removal
+- [ ] 7645 Briding Eve
