@@ -5,15 +5,11 @@
 #include <cstdint>
 #include <math.h>
 #include <algorithm>
-#include <climits>
-#include <queue>
-#include <vector>
-#include <list>
 
 using namespace std;
 
 #define PI  3.14159265
-#define EPS 1e-5
+#define EPS 1e-6
 
 double x[4], y[4];
 
@@ -52,9 +48,6 @@ void barycentre()
       x[3] += (tan(angles[(i+1)%3]) + tan(angles[(i+2)%3])) * x[i] / lambda;
       y[3] += (tan(angles[(i+1)%3]) + tan(angles[(i+2)%3])) * y[i] / lambda;
    }
-
-   if(abs(x[3]) <EPS) x[3]=0;
-   if(abs(y[3]) <EPS) y[3]=0;
 }
 
 double pgcd(double a, double b)
@@ -67,11 +60,9 @@ double pgcd(double a, double b)
       MAX = MAX - MIN;
 
       double tmp = max(MAX,MIN);
-
       MIN = min(MAX,MIN);
       MAX = tmp;
    }
-
    return MAX;
 }
 
@@ -92,11 +83,11 @@ int main(void)
 
       //recherche des 3 angles entre le triangle et le centre du cercle
       double angles[3];
-      for(int i=0; i<3; i++) angles[i] = angle(i,(i+1)%3,3)*180/PI;
+      for(int i=0; i<3; i++) angles[i] = angle(i,(i+1)%3,3);
 
       //recherche du plus grand multiple commun aux 3 angles
       double tmp = pgcd(pgcd(angles[0], angles[1]), angles[2]);
 
-      cout << 360/tmp << endl;
+      cout << 2*PI/tmp << endl;
    }
 }
