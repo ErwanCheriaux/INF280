@@ -55,15 +55,6 @@ void barycentre()
 
    if(abs(x[3]) <EPS) x[3]=0;
    if(abs(y[3]) <EPS) y[3]=0;
-
-   cout
-      << angles[0] << " (" << angles[0]*180.0/PI << "), "
-      << angles[1] << " (" << angles[1]*180.0/PI << "), "
-      << angles[2] << " (" << angles[2]*180.0/PI << ")\n"
-      << tan(angles[0]) << ", "
-      << tan(angles[1]) << ", "
-      << tan(angles[2]) << ", "
-      << lambda << endl;
 }
 
 int main(void)
@@ -82,7 +73,10 @@ int main(void)
       barycentre();
 
       //recherche des 3 angles entre le triangle et le centre du cercle
+      double angles[3];
+      for(int i=0; i<3; i++) angles[i] = angle(i,(i+1)%3,3);
 
+      for(int i=0; i<3; i++) cout << angles[i]*180/PI << endl;
 
       cout << "{" << x[3] << "," << y[3] << "}" << "\n" << endl;
    }
