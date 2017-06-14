@@ -29,10 +29,8 @@ inline double norme(int u, int origin)
                (y[u]-y[origin])*(y[u]-y[origin]));
 }
 
-double angle(int origin)
+double angle(int u, int v, int origin)
 {
-   int u = (origin+1)%3;
-   int v = (origin+2)%3;
    return acos(produitScalaire(u,v,origin)/(norme(u,origin)*norme(v,origin)));
 }
 
@@ -42,8 +40,13 @@ void barycentre()
    double lambda = 0;
    x[3] = 0;
    y[3] = 0;
-   for(int i=0; i<3; i++) angles[i] = angle(i);
-   for(int i=0; i<3; i++) lambda += 2*tan(angles[i]);
+   for(int i=0; i<3; i++) 
+   {
+      int u = (i+1)%3;
+      int v = (i+2)%3;
+      angles[i] = angle(u, v, i);
+      lambda += 2*tan(angles[i]);
+   }
    for(int i=0; i<3; i++)
    {
       x[3] += (tan(angles[(i+1)%3]) + tan(angles[(i+2)%3])) * x[i] / lambda;
@@ -77,6 +80,9 @@ int main(void)
 
       //recherche du centre du cercle circonscrit
       barycentre();
+
+      //recherche des 3 angles entre le triangle et le centre du cercle
+
 
       cout << "{" << x[3] << "," << y[3] << "}" << "\n" << endl;
    }
