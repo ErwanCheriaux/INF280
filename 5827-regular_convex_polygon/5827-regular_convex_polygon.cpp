@@ -88,6 +88,6 @@ int main(void)
       //recherche du plus grand multiple commun aux 3 angles
       double nbVertices = 2*PI/pgcd(pgcd(angles[0], angles[1]), angles[2]);
 
-      if(nbVertices <= 1000) cout << nbVertices << endl;
+      if(nbVertices > 2 and nbVertices < 1001) cout << nbVertices << endl;
    }
 }
