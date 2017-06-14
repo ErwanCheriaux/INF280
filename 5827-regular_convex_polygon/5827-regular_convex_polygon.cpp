@@ -57,6 +57,24 @@ void barycentre()
    if(abs(y[3]) <EPS) y[3]=0;
 }
 
+double pgcd(double a, double b)
+{
+   double MAX = max(a,b);
+   double MIN = min(a,b);
+
+   while(MAX > EPS and MIN > EPS)
+   {
+      MAX = MAX - MIN;
+
+      double tmp = max(MAX,MIN);
+
+      MIN = min(MAX,MIN);
+      MAX = tmp;
+   }
+
+   return MAX;
+}
+
 int main(void)
 {
    while(1)
@@ -74,10 +92,11 @@ int main(void)
 
       //recherche des 3 angles entre le triangle et le centre du cercle
       double angles[3];
-      for(int i=0; i<3; i++) angles[i] = angle(i,(i+1)%3,3);
+      for(int i=0; i<3; i++) angles[i] = angle(i,(i+1)%3,3)*180/PI;
 
-      for(int i=0; i<3; i++) cout << angles[i]*180/PI << endl;
+      //recherche du plus grand multiple commun aux 3 angles
+      int tmp = pgcd(pgcd(angles[0], angles[1]), angles[2]);
 
-      cout << "{" << x[3] << "," << y[3] << "}" << "\n" << endl;
+      cout << 360/tmp << endl;
    }
 }
