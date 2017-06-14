@@ -95,7 +95,7 @@ int main(void)
       for(int i=0; i<3; i++) angles[i] = angle(i,(i+1)%3,3)*180/PI;
 
       //recherche du plus grand multiple commun aux 3 angles
-      int tmp = pgcd(pgcd(angles[0], angles[1]), angles[2]);
+      double tmp = pgcd(pgcd(angles[0], angles[1]), angles[2]);
 
       cout << 360/tmp << endl;
    }
