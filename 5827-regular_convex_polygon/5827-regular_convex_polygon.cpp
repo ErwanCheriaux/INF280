@@ -12,23 +12,28 @@
 
 using namespace std;
 
-#define PI 3.14159265
+#define PI  3.14159265
+#define EPS 1e-5
 
 double x[4], y[4];
 
-inline double produitScalaire(int u, int v)
+inline double produitScalaire(int u, int v, int origin)
 {
-   return x[u]*x[v] + y[u]*y[v];
+   return (x[u]-x[origin])*(x[v]-x[origin]) + \
+          (y[u]-y[origin])*(y[v]-y[origin]);
 }
 
-inline double norme(int u)
+inline double norme(int u, int origin)
 {
-   return sqrt(x[u]*x[u] + y[u]*y[u]);
+   return sqrt((x[u]-x[origin])*(x[u]-x[origin]) + \
+               (y[u]-y[origin])*(y[u]-y[origin]));
 }
 
-double angle(int u, int v)
+double angle(int origin)
 {
-   return acos(produitScalaire(u,v)/(norme(u)*norme(v)));
+   int u = (origin+1)%3;
+   int v = (origin+2)%3;
+   return acos(produitScalaire(u,v,origin)/(norme(u,origin)*norme(v,origin)));
 }
 
 void barycentre()
@@ -37,7 +42,7 @@ void barycentre()
    double lambda = 0;
    x[3] = 0;
    y[3] = 0;
-   for(int i=0; i<3; i++) angles[i] = angle((i+1)%3,(i+2)%3);
+   for(int i=0; i<3; i++) angles[i] = angle(i);
    for(int i=0; i<3; i++) lambda += 2*tan(angles[i]);
    for(int i=0; i<3; i++)
    {
@@ -45,10 +50,13 @@ void barycentre()
       y[3] += (tan(angles[(i+1)%3]) + tan(angles[(i+2)%3])) * y[i] / lambda;
    }
 
+   if(abs(x[3]) <EPS) x[3]=0;
+   if(abs(y[3]) <EPS) y[3]=0;
+
    cout
-      << angles[0] << ", "
-      << angles[1] << ", "
-      << angles[2] << ", "
+      << angles[0] << " (" << angles[0]*180.0/PI << "), "
+      << angles[1] << " (" << angles[1]*180.0/PI << "), "
+      << angles[2] << " (" << angles[2]*180.0/PI << ")\n"
       << tan(angles[0]) << ", "
       << tan(angles[1]) << ", "
       << tan(angles[2]) << ", "
@@ -70,6 +78,6 @@ int main(void)
       //recherche du centre du cercle circonscrit
       barycentre();
 
-      cout << "{" << x[3] << "," << y[3] << "}" << endl;
+      cout << "{" << x[3] << "," << y[3] << "}" << "\n" << endl;
    }
 }
