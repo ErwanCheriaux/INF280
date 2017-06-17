@@ -10,7 +10,7 @@
 using namespace std;
 
 #define PI   3.14159265
-#define STEP 0.01
+#define STEP 0.005
 #define MAX  10000
 
 int x[100], y[100];
