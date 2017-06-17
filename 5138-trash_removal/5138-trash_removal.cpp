@@ -10,7 +10,7 @@
 using namespace std;
 
 #define PI   3.14159265
-#define STEP 0.005
+#define STEP 0.001
 #define MAX  10000
 
 int x[100], y[100];
@@ -57,6 +57,8 @@ int main(void)
          best = min(best, maxDistance-minDistance);
       }
 
+      best = trunc(best*1000);
+      best = ceil(best/10)/100;
       cout << "Case " << cpt++ << ": " << fixed << setprecision(2) << best << endl;
    }
 }
