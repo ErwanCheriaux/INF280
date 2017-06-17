@@ -4,7 +4,7 @@
 #include <iostream>
 #include <cstdint>
 #include <math.h>
-#include <climits>
+#include <iomanip>
 #include <algorithm>
 
 using namespace std;
@@ -57,6 +57,6 @@ int main(void)
          best = min(best, maxDistance-minDistance);
       }
 
-      cout << "Case " << cpt++ << ": " << round(best*100)/100 << endl;
+      cout << "Case " << cpt++ << ": " << fixed << setprecision(2) << best << endl;
    }
 }
