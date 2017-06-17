@@ -4,14 +4,16 @@
 #include <iostream>
 #include <cstdint>
 #include <math.h>
+#include <climits>
 #include <algorithm>
 
 using namespace std;
 
-#define PI  3.14159265
-#define EPS 1e-6
+#define PI   3.14159265
+#define STEP 0.01
+#define MAX  10000
 
-double x[100], y[100];
+int x[100], y[100];
 
 double norme(int u, int origin)
 {
@@ -31,8 +33,30 @@ double dist(int u, int origin, double rotation)
 
 int main(void)
 {
-   x[0] = y[0] = 0;
-   x[1] = y[1] = 2;
-   for(double rot=0; rot < PI; rot += PI/4)
-      cout << rot << ": " << dist(1,0,rot) << endl;
+   int cpt = 1;
+   while(1)
+   {
+      int n;
+      scanf("%d\n", &n);
+
+      if(!n) return 0;
+
+      for(int i=0; i<n; i++) scanf("%d %d\n", &x[i], &y[i]);
+
+      double best = MAX;
+      for(double rot=0; rot <= PI; rot += STEP)
+      {
+         double maxDistance = 0;
+         double minDistance = 0;
+         for(int i=1; i<n; i++)
+         {
+            double distance = dist(i,0,rot);
+            maxDistance = max(maxDistance, distance);
+            minDistance = min(minDistance, distance);
+         }
+         best = min(best, maxDistance-minDistance);
+      }
+
+      cout << "Case " << cpt++ << ": " << round(best*100)/100 << endl;
+   }
 }
