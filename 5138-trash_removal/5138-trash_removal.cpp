@@ -31,7 +31,7 @@ double dist(int u, int origin, double rotation)
    return norme(u,origin) * sin(angle(u,origin) - rotation);
 }
 
-int main(void)
+int main(int argc, char **argv)
 {
    int cpt = 1;
    while(1)
@@ -44,7 +44,8 @@ int main(void)
       for(int i=0; i<n; i++) scanf("%d %d\n", &x[i], &y[i]);
 
       double best = MAX;
-      for(double rot=0; rot <= PI; rot += STEP)
+      double step = atof(argv[1]);
+      for(double rot=0; rot <= PI; rot += step)
       {
          double maxDistance = 0;
          double minDistance = 0;
@@ -57,8 +58,6 @@ int main(void)
          best = min(best, maxDistance-minDistance);
       }
 
-      best = trunc(best*1000);
-      best = ceil(best/10)/100;
       cout << "Case " << cpt++ << ": " << fixed << setprecision(2) << best << endl;
    }
 }
