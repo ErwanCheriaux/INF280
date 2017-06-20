@@ -37,3 +37,7 @@ Pour uDebug:
 - [ ] 5827 Regular Convex Polygon
 - [ ] 5138 Trash Removal
 - [ ] 7645 Briding Eve
+
+- [ ] 2565 Calling Extraterrestrial Intelligence Again 
+- [ ] 6527 Counting ones
+- [ ] 7647 Dinner Bet
