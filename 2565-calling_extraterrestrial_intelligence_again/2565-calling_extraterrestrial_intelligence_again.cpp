@@ -16,10 +16,10 @@ vector<long long> premiers;
 void cribleEratosthene(int pmax);
 int  rechercheDicho(int val, int nbval);
 
-unsigned int M, A, B;
 
 int main(void)
 {
+   unsigned int M, A, B, P, Q;
    cribleEratosthene(MAXM/2);
 
    while(1)
@@ -27,10 +27,26 @@ int main(void)
       cin >> M >> A >> B;
       if(!M and !A and !B) return 0;
 
+      int best = 0;
       double C = A/B;
       int indexMax = rechercheDicho(M/2, premiers.size());
 
-      cout << "le nombre premier le plus proche de " << M/2 << " est " << premiers[indexMax] << "(" << indexMax << ")" << endl;
+      cout << "DEBUG: " << indexMax << endl;
+
+      for(int i=indexMax; i==0; i--){ //recherche de Q
+         for(int j=i; j==0; j--){     //recherche de P
+            if(premiers[j]/premiers[i] >= C and premiers[i]*premiers[j] <= M){
+               if(premiers[i]*premiers[j] > best)
+               {
+                  best = premiers[i]*premiers[j];
+                  Q    = premiers[i];
+                  P    = premiers[j];
+               }
+            }
+         }
+      }
+
+      cout << P << " " << Q << endl;
    }
 }
 
