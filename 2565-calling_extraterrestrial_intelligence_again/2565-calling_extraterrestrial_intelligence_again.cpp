@@ -16,10 +16,21 @@ vector<long long> premiers;
 
 void cribleEratosthene(int pmax);
 
+unsigned int M, A, B;
+
 int main(void)
 {
    cribleEratosthene(MAXM/2);
-   return 0;
+
+   while(1)
+   {
+      cin >> M >> A >> B;
+      if(!M and !A and !B) return 0;
+
+      cout << M << endl;
+      cout << A << endl;
+      cout << B << endl;
+   }
 }
 
 void cribleEratosthene(int pmax)
