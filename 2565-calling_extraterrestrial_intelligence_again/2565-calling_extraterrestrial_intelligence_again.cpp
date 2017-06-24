@@ -19,7 +19,7 @@ int  rechercheDicho(int val, int nbval);
 
 int main(void)
 {
-   unsigned int M, A, B, P, Q, i, j;
+   unsigned int M, A, B, P, Q;
    cribleEratosthene(MAXM/2);
 
    while(1)
@@ -31,14 +31,8 @@ int main(void)
       double C = (double)A/B;
       int indexMax = rechercheDicho(M/2, premiers.size());
 
-      P = 2;
-      Q = 2;
-      i = indexMax;
-      while(i>0) //recherche de Q
-      {
-         j = i;
-         while(j>0) //recherche de P
-         {
+      for(int i=indexMax; i>=0; i--){ //recherche de Q
+         for(int j=i; j>=0; j--){     //recherche de P
             if((double)premiers[j]/premiers[i] >= C and premiers[i]*premiers[j] <= M){
                if(premiers[i]*premiers[j] > best)
                {
@@ -47,9 +41,7 @@ int main(void)
                   P    = premiers[j];
                }
             }
-            j--;
          }
-         i--;
       }
 
       cout << P << " " << Q << endl;
@@ -95,5 +87,3 @@ int rechercheDicho(int val, int nbval)
 
    return id;  //on retourne l'indice de la valeur la plus proche inférieur ou éguale
 }
-
-
