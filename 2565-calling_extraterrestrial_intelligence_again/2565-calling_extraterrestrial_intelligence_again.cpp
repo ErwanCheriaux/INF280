@@ -19,7 +19,7 @@ int  rechercheDicho(int val, int nbval);
 
 int main(void)
 {
-   unsigned int M, A, B, P, Q;
+   unsigned int M, A, B, P, Q, i, j;
    cribleEratosthene(MAXM/2);
 
    while(1)
@@ -33,8 +33,14 @@ int main(void)
 
       cout << "DEBUG: " << indexMax << endl;
 
-      for(int i=indexMax; i==0; i--){ //recherche de Q
-         for(int j=i; j==0; j--){     //recherche de P
+      P = 2;
+      Q = 2;
+      i = indexMax;
+      while(i>0) //recherche de Q
+      {
+         j = i;
+         while(j>0) //recherche de P
+         {
             if(premiers[j]/premiers[i] >= C and premiers[i]*premiers[j] <= M){
                if(premiers[i]*premiers[j] > best)
                {
@@ -43,7 +49,9 @@ int main(void)
                   P    = premiers[j];
                }
             }
+            j--;
          }
+         i--;
       }
 
       cout << P << " " << Q << endl;
