@@ -28,14 +28,12 @@ int main(void)
       if(!M and !A and !B) return 0;
 
       int best = 0;
-      double C = A/B;
+      double C = (double)A/B;
       int indexMax = rechercheDicho(M/2, premiers.size());
 
-      cout << "DEBUG: " << indexMax << endl;
-
-      for(int i=indexMax; i==0; i--){ //recherche de Q
-         for(int j=i; j==0; j--){     //recherche de P
-            if(premiers[j]/premiers[i] >= C and premiers[i]*premiers[j] <= M){
+      for(int i=indexMax; i>=0; i--){ //recherche de Q
+         for(int j=i; j>=0; j--){     //recherche de P
+            if((double)premiers[j]/premiers[i] >= C and premiers[i]*premiers[j] <= M){
                if(premiers[i]*premiers[j] > best)
                {
                   best = premiers[i]*premiers[j];
@@ -89,5 +87,3 @@ int rechercheDicho(int val, int nbval)
 
    return id;  //on retourne l'indice de la valeur la plus proche inférieur ou éguale
 }
-
-
