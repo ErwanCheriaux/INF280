@@ -39,5 +39,5 @@ Pour uDebug:
 - [ ] 7645 Briding Eve
 
 - [ ] 2565 Calling Extraterrestrial Intelligence Again 
-- [ ] 6527 Counting ones
+- [X] 6527 Counting ones
 - [ ] 7647 Dinner Bet

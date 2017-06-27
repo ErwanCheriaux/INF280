@@ -3,11 +3,6 @@
 #include <cstring>
 #include <iostream>
 #include <cstdint>
-#include <algorithm>
-#include <climits>
-#include <queue>
-#include <vector>
-#include <list>
 
 using namespace std;
 
@@ -27,9 +22,6 @@ int main(void)
    while(1)
    {
       if(!(cin >> A >> B)) return 0;
-
-      cout << A << " : " << A000788(A) << endl;
-      cout << B << " : " << A000788(B) << endl;
-      cout << A000788(B) - A000788(A) + 1 << endl;
+      cout << A000788(B) - A000788(A-1) << endl;
    }
 }
