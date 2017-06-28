@@ -1,0 +1,52 @@
+C library:                          Multi-threading:
+                                    
+    <cassert> (assert.h)                <atomic>
+    <cctype> (ctype.h)                  <condition_variable>
+    <cerrno> (errno.h)                  <future>
+    <cfenv> (fenv.h)                    <mutex>
+    <cfloat> (float.h)                  <thread>
+    <cinttypes> (inttypes.h)        
+    <ciso646> (iso646.h)            Other:
+    <climits> (limits.h)            
+    <clocale> (locale.h)                <algorithm>
+    <cmath> (math.h)                    <bitset>
+    <csetjmp> (setjmp.h)                <chrono>
+    <csignal> (signal.h)                <codecvt>
+    <cstdarg> (stdarg.h)                <complex>
+    <cstdbool> (stdbool.h)              <exception>
+    <cstddef> (stddef.h)                <functional>
+    <cstdint> (stdint.h)                <initializer_list>
+    <cstdio> (stdio.h)                  <iterator>
+    <cstdlib> (stdlib.h)                <limits>
+    <cstring> (string.h)                <locale>
+    <ctgmath> (tgmath.h)                <memory>
+    <ctime> (time.h)                    <new>
+    <cuchar> (uchar.h)                  <numeric>
+    <cwchar> (wchar.h)                  <random>
+    <cwctype> (wctype.h)                <ratio>
+                                        <regex>
+Containers:                             <stdexcept>
+                                        <string>
+    <array>                             <system_error>
+    <deque>                             <tuple>
+    <forward_list>                      <typeindex>
+    <list>                              <typeinfo>
+    <map>                               <type_traits>
+    <queue>                             <utility>
+    <set>                               <valarray>
+    <stack>                         
+    <unordered_map>
+    <unordered_set>
+    <vector>
+
+Input/Output:
+
+    <fstream>
+    <iomanip>
+    <ios>
+    <iosfwd>
+    <iostream>
+    <istream>
+    <ostream>
+    <sstream>
+    <streambuf>
